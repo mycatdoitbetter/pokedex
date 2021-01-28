@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 /* eslint @typescript-eslint/no-empty-interface: "off" */
 
 import 'styled-components'

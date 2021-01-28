@@ -1,7 +1,11 @@
 import React from 'react'
 import Head from 'next/head'
 
-const SignIn: React.FC = () => (
+import { Todos } from './api'
+
+const SignIn: React.FC = () => {
+  Todos()
+  return (
   <div>
     <Head>
       <title>Pokedex</title>
@@ -12,6 +16,7 @@ const SignIn: React.FC = () => (
       <h1>Hello My Friends New!!</h1>
     </main>
   </div>
-)
+  )
+}
 
 export default SignIn
