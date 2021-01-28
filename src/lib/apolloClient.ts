@@ -1,20 +1,20 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable no-underscore-dangle */
 import { useMemo } from 'react'
-import { ApolloClient, HttpLink, InMemoryCache } from
+import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from
   '@apollo/client'
 
 let apolloClient
 
-export function createApolloClient() {
-  return new ApolloClient({
-    ssrMode: typeof window === 'undefined', // set to true for SSR
-    link: new HttpLink({
-      uri: 'https://graphql-pokeapi.vercel.app/api/graphql'
-    }),
-    cache: new InMemoryCache()
-  })
-}
+export const createApolloClient = () : ApolloClient<NormalizedCacheObject> => new ApolloClient({
+  ssrMode: typeof window === 'undefined',
+  link: new HttpLink({
+    uri: 'https://graphql-pokeapi.vercel.app/api/graphql'
+  }),
+  cache: new InMemoryCache()
+})
 
-export function initializeApollo(initialState = null) {
+export const initializeApollo = (initialState = null) => {
   const _apolloClient = apolloClient ?? createApolloClient()
 
   // If your page has Next.js data fetching methods that use Apollo Client,
@@ -28,15 +28,13 @@ export function initializeApollo(initialState = null) {
     _apolloClient.cache.restore({ ...existingCache, ...initialState })
   }
 
-  // For SSG and SSR always create a new Apollo Client
   if (typeof window === 'undefined') return _apolloClient
 
-  // Create the Apollo Client once in the client
   if (!apolloClient) apolloClient = _apolloClient
   return _apolloClient
 }
 
-export function useApollo(initialState) {
+export const useApollo = (initialState) => {
   const store = useMemo(() => initializeApollo(initialState), [initialState])
   return store
 }
