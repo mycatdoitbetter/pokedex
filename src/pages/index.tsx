@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 
-const Home: React.FC = () => (
+const SignIn: React.FC = () => (
   <div>
     <Head>
       <title>Pokedex</title>
@@ -14,4 +14,4 @@ const Home: React.FC = () => (
   </div>
 )
 
-export default Home
+export default SignIn
