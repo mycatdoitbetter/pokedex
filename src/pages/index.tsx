@@ -5,7 +5,7 @@ const SignIn: React.FC = () => (
   <div>
     <Head>
       <title>Pokedex</title>
-      <link rel="icon" href="/public/favicon.ico" />
+      <link rel="shortcut icon" href="/favicon.ico" />
     </Head>
 
     <main>
