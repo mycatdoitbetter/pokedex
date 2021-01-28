@@ -9,7 +9,7 @@ const SignIn: React.FC = () => (
     </Head>
 
     <main>
-      <h1>Hello My Friends</h1>
+      <h1>Hello My Friends New!!</h1>
     </main>
   </div>
 )
