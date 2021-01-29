@@ -1,36 +1,150 @@
-/* eslint-disable import/prefer-default-export */
-import { gql, useQuery } from '@apollo/client'
+import { Dispatch } from 'react'
 
-const GET_POKEMONS = gql`
-  query pokemons($limit: Int, $offset: Int) {
-    pokemons(limit: $limit, offset: $offset) {
-      count
-      next
-      previous
-      status
-      message
-      results {
-        url
+interface IStatus {
+  base_stat: number,
+  stat: { name: string }
+}
+
+interface ITypes {
+  type: { name: string }
+}
+
+interface IPokemon {
+  id: number,
+  name: string,
+  height: number,
+  weight: number,
+  types: ITypes[],
+  status: IStatus[]
+  description: string
+}
+
+interface IEvolutions {
+  name: string,
+  front_default: string
+}
+
+const gqlQueryAllPokemons = `query pokemons($limit: Int, $offset: Int) {
+  pokemons(limit: $limit, offset: $offset) {
+    count
+    next
+    previous
+    status
+    message
+    results {
+      id
+      url
+      name
+      image
+    }
+  }
+}`
+
+const gqlQueryPokemonByName = `query pokemon($name: String!) {
+  pokemon(name: $name) {
+    id
+    name
+    weight
+    height
+    stats {
+      base_stat
+      stat {
         name
-        image
+        url
+      }
+    }
+    types {
+      type {
+        name
       }
     }
   }
-`
+}`
 
-const gqlVariables = {
-  limit: 2,
-  offset: 1
+const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => {
+    return fetch('https://pokeapi.co/api/v2/evolution-chain/1')
+    .then((response) => response.json())
+    .then(({ chain }) => {
+      var evolutionChain = [];
+      var evolutionData = chain;
+      var evolutionId = id;
+
+      // Algorithm to get the chain struct
+      do {
+
+        let front_default = getImageArtWork(evolutionId); // Promised value
+
+        evolutionId++
+
+        evolutionChain.push({ name: evolutionData.species.name, front_default })
+
+        evolutionData = evolutionData['evolves_to'][0]
+
+      } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
+
+      return evolutionChain
+
+    })
+
 }
 
-export const Todos: string = () => {
-  const { loading, error, data } = useQuery(GET_POKEMONS, {
+const getImageArtWork = async (id: number) : Promise<string> =>  {
+  return await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+  .then((res) => res.json())
+  .then(({ sprites }) => sprites.other.["official-artwork"].front_default)
+}
+
+const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
+  const gqlVariables = {
+    name
+  }
+  const body = JSON.stringify({
+    query: gqlQueryPokemonByName,
     variables: gqlVariables
   })
 
-  if (loading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
+  // Get the data from pokevercel
+  return fetch('https://graphql-pokeapi.vercel.app/api/graphql', {
+    credentials: 'omit',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+    method: 'POST'
+  })
+    .then((response) => response.json())
+    .then(({ data }) => ({...data.pokemon, description: "Description"}))
+}
 
-  console.log('Response from server', data)
-  return 'Success!'
+export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
+  const gqlVariables = {
+    limit: 151,
+    offset: 0
+  }
+  const body = JSON.stringify({
+    query: gqlQueryAllPokemons,
+    variables: gqlVariables
+  })
+
+  fetch('https://graphql-pokeapi.vercel.app/api/graphql', {
+    credentials: 'omit',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+    method: 'POST'
+  })
+    .then((response) => response.json())
+    .then(({ data }) => setPokemons(data.pokemons.results))
+}
+
+export const getPokemonDetail = async (name: string, id: number) : Promise<void> => {
+
+
+  const mainContent = await getMainContentPokemon(name);
+  const mainArtWork = await getImageArtWork(id);
+  const evolutionChain = await getEvolutionChain(id);
+
+  console.log("mainContent", mainContent)
+  console.log("mainArtWork", mainArtWork)
+  console.log("evolutionChain", evolutionChain)
+
+
+
 }
