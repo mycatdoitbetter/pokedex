@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, SetStateAction } from 'react'
 import Head from 'next/head'
 
 import { getAllPokemons, getPokemonDetail } from './api'
@@ -32,9 +32,9 @@ interface IPokemon {
   stats: IStatus[]
   description: string
 }
+
 interface IEvolutions {
-  species: { evolution_details: [], evolves_to: [] },
-  detail: {name: string }
+  front_default: string, name: string
 }
 
 interface IPokemonDetail {
@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
   const [selectedPokemon, setSelectedPokemon] = useState({
     name: 'bulbasaur', id: 1, image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
   })
-  const [pokemonDetails, setPokemonDetails] = useState({})
+  const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetail>()
 
   const { toogleDarkMode, darkMode } = useContext(ThemeContext)
 
