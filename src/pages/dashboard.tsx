@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Head from 'next/head'
 
-import { FiSun } from 'react-icons/fi'
-import { HiOutlineMoon } from 'react-icons/hi'
-
 import { getAllPokemons, getPokemonDetail } from './api'
 
 import SideList from './components/sidelist'

@@ -1,9 +1,14 @@
+/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 
 import { Container, InputSearchContainer, ListContainer, MagnifyIcon } from '../../styles/components/sidelist'
 
-import { capitalizeFirstLetter, zerosPrefix } from '../utils/functions'
+// import { capitalizeFirstLetter, zerosPrefix } from '../utils/functions'
+
+export const capitalizeFirstLetter = (string: string) : string => string.charAt(0).toUpperCase() + string.slice(1)
+
+export const zerosPrefix = (integer: number, quantityOfNumbers: number) : string => String(integer).padStart(quantityOfNumbers, '0')
 
 interface IPokemon {
     id: number;
