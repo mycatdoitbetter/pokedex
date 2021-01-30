@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
   const [selectedPokemon, setSelectedPokemon] = useState({
     name: 'bulbasaur', id: 1, image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
   })
-  const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetail>()
+  const [pokemonDetails, setPokemonDetails] = useState({})
 
   const { toogleDarkMode, darkMode } = useContext(ThemeContext)
 
