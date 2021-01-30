@@ -136,7 +136,7 @@ export const DetailSection = styled.div`
     .type {
       width: 100px;
       padding: 4px 10px;
-      font-size: 15px;
+      font-size: 0.95em;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -213,7 +213,7 @@ export const DetailSection = styled.div`
       color: #fff;
       background: tomato;
       text-align: center;
-      font-size: 1em;
+      font-size: 0.95em;
       height: 30px;
       margin: 0 10px;
       border-radius: 10px;

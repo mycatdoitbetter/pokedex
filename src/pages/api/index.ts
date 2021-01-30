@@ -129,7 +129,7 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
 
 const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
   .then((res) => res.json())
-  .then((data) => data.flavor_text_entries[3].flavor_text)
+  .then((data) => data.flavor_text_entries[5].flavor_text)
 
 export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
   const gqlVariables = {

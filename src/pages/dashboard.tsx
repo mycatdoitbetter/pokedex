@@ -206,7 +206,7 @@ const Dashboard: React.FC = () => {
               <Evolutions />
               <div id="characteristics">
                 <span>
-                  {pokemonDetails?.characteristic.replace(/[^\w\s]/gi, '')}
+                  {pokemonDetails?.characteristic.replace(/[^a-zA-Z0-9 ]/g, '\n ')}
                 </span>
               </div>
             </DetailSection>
