@@ -21,8 +21,13 @@ type ManagePokemons = {
   setSelectedPokemon: Dispatch<SetStateAction<IPokemon>>;
 }
 
+const pokemonLogo = 'https://cdn.riderize.com/miscellaneous/logo-pokedex.png'
+
 const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : ManagePokemons) => {
   const [selectedPokemonId, setSelectedPokemonId] = useState(1)
+  const [textToSearch, setTextToSearch] = useState('')
+
+  const filterResults = () => pokemons.filter((pokemon) => pokemon.name.includes(textToSearch))
 
   const selectNewPokemon = (id: number, name: string, image: string) => {
     setSelectedPokemonId(id)
@@ -44,7 +49,23 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
     )
   }
 
-  const pokemonLogo = 'https://cdn.riderize.com/miscellaneous/logo-pokedex.png'
+  const MewIsLoading = () => (
+    <div>
+      <img src="https://i.pinimg.com/originals/0f/58/60/0f5860ab2d063aaa92d55a994d9b47e4.gif" width={100} alt="mew-is-loading"/>
+    </div>
+  )
+
+  const PokemonsList = () => (
+    <ul>
+      {pokemons.filter(({ name, id }) => {
+        const nameDisplayed = `#${zerosPrefix(id, 3)}-${capitalizeFirstLetter(name)}`.toLowerCase()
+        if (textToSearch.length > 2) {
+          return nameDisplayed.includes(textToSearch.toLowerCase())
+        }
+        return nameDisplayed.includes('')
+      }).map(renderSelectedPokemonName)}
+    </ul>
+  )
 
   return (
     <Container>
@@ -53,7 +74,12 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
         <span>Everything you wanted know about your favorite pocket monsters!</span>
 
         <InputSearchContainer >
-          <input type="text" placeholder="Search by name or number" />
+          <input
+            type="text"
+            onChange={({ target }) => setTextToSearch(target.value)}
+            value={textToSearch}
+            placeholder="Search by name or number"
+          />
           <MagnifyIcon />
         </InputSearchContainer>
 
@@ -61,10 +87,9 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
 
       <ListContainer>
         {
-          pokemons !== undefined &&
-          <ul>
-            {pokemons.map(renderSelectedPokemonName)}
-          </ul>
+          pokemons
+            ? <PokemonsList />
+            : <MewIsLoading />
         }
       </ListContainer>
 

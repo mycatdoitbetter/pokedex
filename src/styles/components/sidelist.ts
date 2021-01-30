@@ -77,6 +77,7 @@ export const ListContainer = styled.nav`
   margin-left: 35px;
   overflow:hidden;
   overflow-y:scroll;
+  display: flex;
 
   ul {
     display: flex;
@@ -123,6 +124,17 @@ export const ListContainer = styled.nav`
 
   ::-webkit-scrollbar-thumb:hover {
     background: #011b5190;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+  }
+
+  img {
+    align-self: center;
   }
 `
 
