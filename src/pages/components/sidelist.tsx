@@ -1,105 +1,70 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 
-import { Container, InputSearchContainer, ListContainer } from '../../styles/components/sidelist'
+import { Container, InputSearchContainer, ListContainer, MagnifyIcon } from '../../styles/components/sidelist'
 
-import MagnifyIcon from '../../assets/svg/magnify-icon.svg'
+import { capitalizeFirstLetter, zerosPrefix } from '../utils/functions'
 
-// Add a zero to format the pokemon prefix
-const zerosPrefix = (integer: number, quantityOfNumbers: number) => String(integer).padStart(quantityOfNumbers, '0')
+interface IPokemon {
+    id: number;
+    name: string;
+    image: string;
+}
 
-const array = [
-  { id: 1, name: 'Bulbasaur' },
-  { id: 2, name: 'Evysaur' },
-  { id: 3, name: 'Charmander' },
-  { id: 4, name: 'Charmander' },
-  { id: 5, name: 'Charmander' },
-  { id: 6, name: 'Charmander' },
-  { id: 7, name: 'Charmander' },
-  { id: 8, name: 'Charmander' },
-  { id: 9, name: 'Charmander' },
-  { id: 10, name: 'Charmander' },
-  { id: 11, name: 'Charmander' },
-  { id: 12, name: 'Charmander' },
-  { id: 13, name: 'Charmander' },
-  { id: 14, name: 'Charmander' },
-  { id: 15, name: 'Charmander' },
-  { id: 16, name: 'Charmander' },
-  { id: 17, name: 'Charmander' },
-  { id: 1, name: 'Bulbasaur' },
-  { id: 2, name: 'Evysaur' },
-  { id: 3, name: 'Charmander' },
-  { id: 4, name: 'Charmander' },
-  { id: 5, name: 'Charmander' },
-  { id: 6, name: 'Charmander' },
-  { id: 7, name: 'Charmander' },
-  { id: 8, name: 'Charmander' },
-  { id: 9, name: 'Charmander' },
-  { id: 10, name: 'Charmander' },
-  { id: 11, name: 'Charmander' },
-  { id: 12, name: 'Charmander' },
-  { id: 13, name: 'Charmander' },
-  { id: 14, name: 'Charmander' },
-  { id: 15, name: 'Charmander' },
-  { id: 16, name: 'Charmander' },
-  { id: 17, name: 'Charmander' },
-  { id: 1, name: 'Bulbasaur' },
-  { id: 2, name: 'Evysaur' },
-  { id: 3, name: 'Charmander' },
-  { id: 4, name: 'Charmander' },
-  { id: 5, name: 'Charmander' },
-  { id: 6, name: 'Charmander' },
-  { id: 7, name: 'Charmander' },
-  { id: 8, name: 'Charmander' },
-  { id: 9, name: 'Charmander' },
-  { id: 10, name: 'Charmander' },
-  { id: 11, name: 'Charmander' },
-  { id: 12, name: 'Charmander' },
-  { id: 13, name: 'Charmander' },
-  { id: 14, name: 'Charmander' },
-  { id: 15, name: 'Charmander' },
-  { id: 16, name: 'Charmander' },
-  { id: 17, name: 'Charmander' },
-  { id: 1, name: 'Bulbasaur' },
-  { id: 2, name: 'Evysaur' },
-  { id: 3, name: 'Charmander' },
-  { id: 4, name: 'Charmander' },
-  { id: 5, name: 'Charmander' },
-  { id: 6, name: 'Charmander' },
-  { id: 7, name: 'Charmander' },
-  { id: 8, name: 'Charmander' },
-  { id: 9, name: 'Charmander' },
-  { id: 10, name: 'Charmander' },
-  { id: 11, name: 'Charmander' },
-  { id: 12, name: 'Charmander' },
-  { id: 13, name: 'Charmander' },
-  { id: 14, name: 'Charmander' },
-  { id: 15, name: 'Charmander' },
-  { id: 16, name: 'Charmander' },
-  { id: 17, name: 'Charmander' }
-]
+type ManagePokemons = {
+  pokemons: IPokemon[];
+  setSelectedPokemon: Dispatch<SetStateAction<IPokemon>>;
+}
 
-const Dashboard: React.FC = () => (
-  <Container>
-    <div id="title-container">
-      <img src="https://cdn.riderize.com/miscellaneous/logo-pokedex.png" />
-      <span>Everything you wanted know about your favorite pocket monsters!</span>
+const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : ManagePokemons) => {
+  const [selectedPokemonId, setSelectedPokemonId] = useState(1)
 
-      <InputSearchContainer >
-        <input type="text" placeholder="Search by name or number" />
-        <MagnifyIcon />
-        {/* <img id="magnify-icon" src="https://img.icons8.com/fluent-systems-filled/24/000000/search.png"/> */}
-      </InputSearchContainer>
+  const selectNewPokemon = (id: number, name: string, image: string) => {
+    setSelectedPokemonId(id)
+    setSelectedPokemon({ id, name, image })
+  }
 
-    </div>
+  const renderSelectedPokemonName = ({ name, id, image }) => {
+    if (selectedPokemonId === id) {
+      return (
+        <button type="button" key={id}>
+          <li className="selected">{`#${zerosPrefix(id, 3)} - ${capitalizeFirstLetter(name)}`}</li>
+        </button>
+      )
+    }
+    return (
+      <button type="button" key={id} onClick={() => selectNewPokemon(id, name, image)}>
+        <li>{`#${zerosPrefix(id, 3)} - ${capitalizeFirstLetter(name)}`}</li>
+      </button>
+    )
+  }
 
-    <ListContainer>
-      <ul>
-        {array.map(({ name, id }) => <li key={id}>{`#${zerosPrefix(id, 3)} - ${name}`}</li>)}
-      </ul>
-    </ListContainer>
+  const pokemonLogo = 'https://cdn.riderize.com/miscellaneous/logo-pokedex.png'
 
-  </Container>
-)
+  return (
+    <Container>
+      <div id="title-container">
+        <img src={pokemonLogo} />
+        <span>Everything you wanted know about your favorite pocket monsters!</span>
+
+        <InputSearchContainer >
+          <input type="text" placeholder="Search by name or number" />
+          <MagnifyIcon />
+        </InputSearchContainer>
+
+      </div>
+
+      <ListContainer>
+        {
+          pokemons !== undefined &&
+          <ul>
+            {pokemons.map(renderSelectedPokemonName)}
+          </ul>
+        }
+      </ListContainer>
+
+    </Container>
+  )
+}
 
 export default Dashboard

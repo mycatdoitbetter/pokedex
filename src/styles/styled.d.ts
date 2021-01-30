@@ -6,8 +6,13 @@ import 'styled-components'
 
 import theme from './theme'
 
-export type Theme = typeof theme
+export type Theme = typeof theme.colorsLight
+export type ThemeDark = typeof theme.colorsDark
 
 declare module 'styled-components' {
-  export interface DefaultTheme extends Theme {}
-}
+  export interface DefaultTheme extends ThemeLight {}
+};
+
+declare module 'styled-components' {
+  export interface DefaultTheme extends ThemeDark {}
+};

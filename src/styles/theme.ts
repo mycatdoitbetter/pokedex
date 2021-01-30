@@ -1,8 +1,15 @@
 const theme = {
-  colors: {
+  colorsLight: {
     background: '#fcfcfd',
     mainRed: '#dd4b4a',
-    mainBlue: '#0054d1',
+    mainBlue: '#00b3eb',
+    text: '#000',
+    primary: '#8257e6'
+  },
+  colorsDark: {
+    background: '#fcfcfd',
+    mainRed: '#450920',
+    mainBlue: '#0f3460',
     text: '#000',
     primary: '#8257e6'
   }

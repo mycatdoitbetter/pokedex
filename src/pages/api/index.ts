@@ -114,6 +114,15 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     .then(({ data }) => ({...data.pokemon, description: "Description"}))
 }
 
+const getDescriptionFormWiki = async (id: number)  => {
+
+  return await fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
+  .then((res) => res.json())
+  .then((data) => data.descriptions[2].description)
+
+}
+
+
 export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
   const gqlVariables = {
     limit: 151,
@@ -123,6 +132,7 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
     query: gqlQueryAllPokemons,
     variables: gqlVariables
   })
+
 
   fetch('https://graphql-pokeapi.vercel.app/api/graphql', {
     credentials: 'omit',
@@ -136,14 +146,22 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
 
 export const getPokemonDetail = async (name: string, id: number) : Promise<void> => {
 
-
+  const characteristic = await getDescriptionFormWiki(id)
   const mainContent = await getMainContentPokemon(name);
   const mainArtWork = await getImageArtWork(id);
   const evolutionChain = await getEvolutionChain(id);
 
-  console.log("mainContent", mainContent)
-  console.log("mainArtWork", mainArtWork)
-  console.log("evolutionChain", evolutionChain)
+  // console.log("characteristic", characteristic)
+  // console.log("mainContent", mainContent)
+  // console.log("mainArtWork", mainArtWork)
+  // console.log("evolutionChain", evolutionChain)
+
+  return {
+    characteristic,
+    mainContent,
+    mainArtWork,
+    evolutionChain
+  }
 
 
 

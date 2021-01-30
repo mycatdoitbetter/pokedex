@@ -1,22 +1,30 @@
-import React from 'react'
+import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
-
-import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../lib/apolloClient'
 
 import GlobalStyle from '../styles/global'
 import theme from '../styles/theme'
 
+export type ThemeContextType = {
+  darkMode: boolean;
+  toogleDarkMode: Dispatch<SetStateAction<boolean>>;
+}
+
+export const ThemeContext = createContext<ThemeContextType>(null)
+
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const apolloClient = useApollo(pageProps.initialApolloState)
+  const [darkMode, toogleDarkMode] = useState(false)
+
+  // const toggleTheme = () : void => toogleDarkMode(!darkMode)
+
   return (
-    <ApolloProvider client={apolloClient}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkMode ? theme.colorsDark : theme.colorsLight}>
+      <ThemeContext.Provider value={{ darkMode, toogleDarkMode }}>
+        {/* <ThemeProvider theme={darkMode ? theme.colorsDark : theme.colors}> */}
         <Component {...pageProps} />
         <GlobalStyle />
-      </ThemeProvider>
-    </ApolloProvider>
+      </ThemeContext.Provider>
+    </ThemeProvider>
   )
 }
 
