@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-unmodified-loop-condition */
 import { Dispatch } from 'react'
 
 interface IStatus {
@@ -22,6 +25,13 @@ interface IPokemon {
 interface IEvolutions {
   name: string,
   front_default: string
+}
+
+interface IPokemonDetail {
+  characteristic: { description: string },
+  mainContent: IPokemon,
+  mainArtWork: string,
+  evolutionChain: IEvolutions[]
 }
 
 const gqlQueryAllPokemons = `query pokemons($limit: Int, $offset: Int) {
@@ -61,30 +71,30 @@ const gqlQueryPokemonByName = `query pokemon($name: String!) {
   }
 }`
 
+const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+  .then((res) => res.json())
+  .then(({ sprites }) => sprites.other['official-artwork'].front_default)
+
 const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
   .then((response) => response.json())
   .then(({ chain }) => {
     const evolutionChain = []
-    let evolutionData = chain
+    const evolutionData = chain
     let evolutionId = id
 
     // Algorithm to get the chain struct
     do {
       const front_default = getImageArtWork(evolutionId) // Promised value
 
-      evolutionId++
+      evolutionId += 1
 
       evolutionChain.push({ name: evolutionData.species.name, front_default })
 
-      evolutionData = evolutionData.evolves_to[0]
+        [evolutionData] = evolutionData.evolves_to
     } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
 
     return evolutionChain
   })
-
-const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
-  .then((res) => res.json())
-  .then(({ sprites }) => sprites.other['official-artwork'].front_default)
 
 const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
   const gqlVariables = {
@@ -106,7 +116,7 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     .then(({ data }) => ({ ...data.pokemon, description: 'Description' }))
 }
 
-const getDescriptionFormWiki = async (id: number) => await fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
+const getDescription = async (id: number) : Promise<{description: string}> => fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
   .then((res) => res.json())
   .then((data) => data.descriptions[2].description)
 
@@ -130,8 +140,8 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
     .then(({ data }) => setPokemons(data.pokemons.results))
 }
 
-export const getPokemonDetail = async (name: string, id: number) : Promise<void> => {
-  const characteristic = await getDescriptionFormWiki(id)
+export const getPokemonDetail = async (name: string, id: number) : Promise<IPokemonDetail> => {
+  const characteristic = await getDescription(id)
   const mainContent = await getMainContentPokemon(name)
   const mainArtWork = await getImageArtWork(id)
   const evolutionChain = await getEvolutionChain(id)
