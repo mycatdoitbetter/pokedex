@@ -152,8 +152,8 @@ const Dashboard: React.FC = () => {
         pokemonDetails?.evolutionChain.map(
           (evolution) => (
             <div key={evolution.name} className="evolution">
-              <img src={evolution.front_default} alt=""/>
-              <span>{evolution.name}</span>
+              <img src={evolution.front_default} alt="evolutions-artwork"/>
+              <span>{capitalizeFirstLetter(evolution.name)}</span>
             </div>
           )
         )
