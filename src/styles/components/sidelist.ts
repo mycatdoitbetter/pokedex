@@ -31,7 +31,7 @@ export const Container = styled.div`
 
     span {
       text-align: center;
-      color: #fff;
+      color: ${(props) => props.theme.secondaryText};
       font-size: 17px;
     }
 
@@ -72,7 +72,7 @@ export const InputSearchContainer = styled.div`
 `
 
 export const ListContainer = styled.nav`
-  height: 100%;
+  height: 65%;
   margin-top: 20px;
   margin-left: 35px;
   overflow:hidden;
@@ -98,8 +98,8 @@ export const ListContainer = styled.nav`
 
   li {
     display: flex;
-    padding: 5px 0;
-    color: #fff;
+    padding: 10px 0;
+    color: ${(props) => props.theme.secondaryText};
     font-size: 16px;
   }
 

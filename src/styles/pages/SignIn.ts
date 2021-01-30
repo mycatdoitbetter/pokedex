@@ -11,11 +11,6 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   position: relative;
-  h1 {
-    font-size: 54px;
-    color: ${(props) => props.theme.primary};
-    margin-top: 40px;
-  }
   main {
     width: 100vw;
     height: 100vh;
@@ -85,7 +80,7 @@ export const Form = styled.form`
 
   button {
     width: 40%;
-    background-color: #0054d1;
+    background-color: ${(props) => props.theme.secondaryBlue};
     height: 40px;
     border: none;
     outline: none;
@@ -97,14 +92,12 @@ export const Form = styled.form`
 
     font-size: 14px;
     font-weight: 700;
-    color: #fff;
+    color: ${(props) => props.theme.secondaryText};
 
 
 
 
   }
-
-
 
 `
 
@@ -114,7 +107,7 @@ export const StyledPopup = styled(Popup)`
   }
   &-content {
     width: 350px;
-    background-color: #0054d1;
+    background-color: ${(props) => props.theme.secondaryBlue};
     padding: 20px;
     box-shadow: 5px 5px 5px #9999;
     border-radius: 5px;

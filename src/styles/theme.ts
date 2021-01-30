@@ -4,14 +4,16 @@ const theme = {
     mainRed: '#dd4b4a',
     mainBlue: '#00b3eb',
     text: '#000',
-    primary: '#8257e6'
+    secondaryText: '#fff',
+    secondaryBlue: '#0054d1'
   },
   colorsDark: {
     background: '#fcfcfd',
     mainRed: '#450920',
     mainBlue: '#0f3460',
     text: '#000',
-    primary: '#8257e6'
+    secondaryText: '#fff',
+    secondaryBlue: '#0054d1'
   }
 }
 

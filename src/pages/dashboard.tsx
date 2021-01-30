@@ -10,7 +10,17 @@ import SideList, { capitalizeFirstLetter, zerosPrefix } from './components/sidel
 
 import { ThemeContext } from './_app'
 
-import { LoadPageContainer, Container, SwitchCustom, DetailsContainer, DinamicMoonIcon, DinamicSunIcon, Header, DetailsTabs, DetailSection } from '../styles/pages/Dashboard'
+import {
+  LoadPageContainer,
+  Container,
+  SwitchCustom,
+  DetailsContainer,
+  DinamicMoonIcon,
+  DinamicSunIcon,
+  Header,
+  DetailsTabs,
+  DetailSection
+} from '../styles/pages/dashboard'
 
 interface IStatus {
   base_stat: number,
