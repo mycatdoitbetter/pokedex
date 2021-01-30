@@ -58,7 +58,6 @@ const Dashboard: React.FC = () => {
     getAllPokemons(setPokemons)
     const data = await getPokemonDetail(selectedPokemon.name, selectedPokemon.id)
     setPokemonDetails(data)
-    console.log(data)
   }
 
   useEffect(() => {
@@ -101,14 +100,7 @@ const Dashboard: React.FC = () => {
   }
 
   const Atributes = () => {
-    const [
-      hp,
-      atk,
-      def,
-      spAtk,
-      spDef,
-      speed
-    ] = pokemonDetails?.mainContent.stats
+    const [hp, atk, def, spAtk, spDef, speed] = pokemonDetails?.mainContent.stats
 
     return (
       <div id="atributes">
