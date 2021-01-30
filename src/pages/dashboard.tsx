@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useContext, SetStateAction } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Head from 'next/head'
 
 import { getAllPokemons, getPokemonDetail } from './api'
@@ -95,9 +95,7 @@ const Dashboard: React.FC = () => {
     return (
       <div id="fisical-details">
         <div> <strong>Height:</strong>{feet}'{zerosPrefix(leftover, 2)}" / {heightInMeters} m</div>
-        {/* <div> <strong>Height:</strong>  2'04" / 0.7 m </div> */}
         <div> <strong>Weight:</strong>{weightInLbs.toString().substring(0, 4)}lbs. / {weightInKg}kg</div>
-        {/* <div> <strong>Weight:</strong>  15.2lbs / 06.9kg  </div> */}
       </div>
     )
   }
@@ -116,25 +114,12 @@ const Dashboard: React.FC = () => {
       <div id="atributes">
         <strong>Atributes</strong>
         <div className="grid grid-template-columns">
-          {/* {
-            pokemonDetails?.mainContent.status.map(
-              stats => (
-                <div key={stats.stat.name}className={`stat ${stats.stat.name}`}>{stats.base_stat} HP</div>
-              )
-            )
-          } */}
           <div className="stat hp">{hp.base_stat} HP</div>
           <div className="stat speed">{speed.base_stat} SPEED</div>
           <div className="stat attack">{atk.base_stat} ATK</div>
           <div className="stat defense">{def.base_stat} DEF</div>
           <div className="stat special-attack">{spAtk.base_stat} SP. ATK.</div>
           <div className="stat special-defense">{spDef.base_stat} SP. DEF.</div>
-          {/* <div className="stat hp">50 HP</div>
-          <div className="stat speed">45 SPEED</div>
-          <div className="stat attack">50 ATK</div>
-          <div className="stat defense">40 DEF</div>
-          <div className="stat special-attack">SP. ATK.</div>
-          <div className="stat special-defense">SP. DEF.</div> */}
         </div>
       </div>
     )
@@ -169,23 +154,7 @@ const Dashboard: React.FC = () => {
               </div>
               <Types />
               <FisicalAtributes />
-
-              {/* <Atributes /> */}
-
               <Atributes />
-
-              {/* <div id="atributes">
-                <strong>Atributes</strong>
-                <div className="grid grid-template-columns">
-                  <div className="stat hp">50 HP</div>
-                  <div className="stat speed">45 SPEED</div>
-                  <div className="stat attack">50 ATK</div>
-                  <div className="stat defense">40 DEF</div>
-                  <div className="stat special-attack">SP. ATK.</div>
-                  <div className="stat special-defense">SP. DEF.</div>
-                </div>
-              </div> */}
-
             </DetailSection>
             <DetailSection style={{ paddingLeft: 0 }}>
               <div id="evolutions">
