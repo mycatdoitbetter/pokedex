@@ -39,7 +39,7 @@ interface IEvolutions {
 
 interface IPokemonDetail {
   characteristic: string,
-  evolutionChain: IEvolutions
+  evolutionChain: IEvolutions[]
   mainArtWork: string,
   mainContent: IPokemon,
 }
