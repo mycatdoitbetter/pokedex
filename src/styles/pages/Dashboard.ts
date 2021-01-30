@@ -131,25 +131,25 @@ export const DetailSection = styled.div`
       font-weight: normal;
       text-transform: uppercase
     }
-    .grass { background-color: green; }
-    .poison { background-color: purple; }
-    .grass {  }
-    .water {  }
-    .fire {  }
-    .ground {  }
-    .rock {  }
-    .stell {  }
-    .ice {  }
-    .eletric {  }
-    .dragon {  }
-    .ghost {  }
-    .psychic {  }
-    .normal {  }
-    .fighting {  }
-    .bug {  }
-    .flying {  }
-    .dark {  }
-    .fairy {  }
+    .grass { background-color: #54b947; }
+    .poison { background-color: #9f3fa0; }
+    .grass { background-color: #77c74e;  }
+    .water { background-color: #a8a777;  }
+    .fire { background-color: #ef7e2e;  }
+    .ground { background-color: #dfbf68;  }
+    .rock { background-color: #b69f37;  }
+    .stell { background-color: #b7b7cf;  }
+    .ice { background-color: #97d7d7;  }
+    .eletric { background-color: #f7cf2f;  }
+    .dragon { background-color: #6f37f8;  }
+    .ghost { background-color: #6f5697;  }
+    .psychic { background-color: #f75787;  }
+    .normal { background-color: #678fef;  }
+    .fighting { background-color: #bf2f27;  }
+    .bug { background-color: #a7b720;  }
+    .flying { background-color: #a78fef;  }
+    .dark { background-color: #6e5747;  }
+    .fairy { background-color: #f6e494;  }
 
   }
 
@@ -186,7 +186,7 @@ export const DetailSection = styled.div`
     flex-direction: column;
     margin-top: 20px;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 10px;
 
      strong { margin-left: 10px; margin-bottom: 10px }
     .grid { display: grid; height: 90%; width: 100% }
@@ -233,13 +233,9 @@ export const DetailSection = styled.div`
       margin-right: 30px;
     }
 
-
-
     img {
       height: 90px;
     }
-
-
 
   }
 

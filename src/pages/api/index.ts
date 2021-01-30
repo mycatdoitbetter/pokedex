@@ -1,12 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable prefer-destructuring */
-/* eslint-disable no-await-in-loop */
 /* eslint-disable indent */
 /* eslint-disable no-multi-assign */
 /* eslint-disable no-unexpected-multiline */
 /* eslint-disable camelcase */
 /* eslint-disable no-prototype-builtins */
-/* eslint-disable no-unmodified-loop-condition */
 import { Dispatch, SetStateAction } from 'react'
 
 interface IStatus {
@@ -31,15 +29,14 @@ interface IPokemon {
 }
 
 interface IEvolutions {
-  species: { evolution_details: [], evolves_to: [] },
-  detail: {name: string }
+  front_default: string, name: string
 }
 
 interface IPokemonDetail {
   characteristic: string,
   mainContent: IPokemon,
   mainArtWork: string,
-  evolutionChain: IEvolutions
+  evolutionChain: IEvolutions[]
 }
 
 const gqlQueryAllPokemons = `query pokemons($limit: Int, $offset: Int) {
@@ -83,7 +80,7 @@ const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://p
   .then((res) => res.json())
   .then(({ sprites }) => sprites.other['official-artwork'].front_default)
 
-const getEvolutionChain = async (id: number) : Promise<any> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
+const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
   .then((response) => response.json())
   .then(async ({ chain }) => {
     let evolutionChain = []
@@ -102,20 +99,6 @@ const getEvolutionChain = async (id: number) : Promise<any> => fetch('https://po
 
     return evolutionChain
   })
-
-// Algorithm to get the chain struct
-// do {
-//   const front_default = getImageArtWork(evolutionId) // Promised value
-
-//   evolutionId++
-
-//   evolutionChain = [...evolutionChain, { name: evolutionData.species.name, front_default }]
-//   // evolutionChain.push({ name: evolutionData.species.name, front_default })
-
-//     [evolutionData] = evolutionData.evolves_to
-// } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
-
-// return evolutionChain
 
 const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
   const gqlVariables = {
@@ -137,9 +120,9 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     .then(({ data }) => ({ ...data.pokemon, description: 'Description' }))
 }
 
-const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
+const getDescription = async (id: number) : Promise<any> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
   .then((res) => res.json())
-  .then((data) => data.descriptions[2].description)
+  .then((data) => data.flavor_text_entries[3].flavor_text)
 
 export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
   const gqlVariables = {
@@ -162,6 +145,8 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
 }
 
 export const getPokemonDetail = async (name: string, id: number) : Promise<SetStateAction<IPokemonDetail>> => {
+  console.log(name, id)
+
   const characteristic = await getDescription(id)
   const mainContent = await getMainContentPokemon(name)
   const mainArtWork = await getImageArtWork(id)

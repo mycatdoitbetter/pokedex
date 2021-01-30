@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useContext } from 'react'
@@ -28,7 +29,7 @@ interface IPokemon {
   image: string,
   weight: number,
   types: ITypes[],
-  status: IStatus[]
+  stats: IStatus[]
   description: string
 }
 interface IEvolutions {
@@ -57,6 +58,7 @@ const Dashboard: React.FC = () => {
     getAllPokemons(setPokemons)
     const data = await getPokemonDetail(selectedPokemon.name, selectedPokemon.id)
     setPokemonDetails(data)
+    console.log(data)
   }
 
   useEffect(() => {
@@ -66,6 +68,76 @@ const Dashboard: React.FC = () => {
   const toogleTheme = () => {
     toogleDarkMode(!darkMode)
     setSwitcher(!switcher)
+  }
+
+  const Types = () => (
+    <div id="types">
+      Type
+      {
+        pokemonDetails?.mainContent?.types.map(({ type }) => (
+          <div key={type.name} className={`type ${type.name}`}>{type.name}</div>
+        ))
+      }
+    </div>
+  )
+
+  const FisicalAtributes = () => {
+    const heightInMeters = pokemonDetails?.mainContent.height / 10
+
+    const heightToInch = heightInMeters * 39.37
+
+    const feet = Math.round(heightToInch / 12)
+    const leftover = Math.round(heightToInch % 12)
+
+    const weightInLbs = pokemonDetails?.mainContent.weight / 4.536
+    const weightInKg = pokemonDetails?.mainContent.weight / 10
+
+    return (
+      <div id="fisical-details">
+        <div> <strong>Height:</strong>{feet}'{zerosPrefix(leftover, 2)}" / {heightInMeters} m</div>
+        {/* <div> <strong>Height:</strong>  2'04" / 0.7 m </div> */}
+        <div> <strong>Weight:</strong>{weightInLbs.toString().substring(0, 4)}lbs. / {weightInKg}kg</div>
+        {/* <div> <strong>Weight:</strong>  15.2lbs / 06.9kg  </div> */}
+      </div>
+    )
+  }
+
+  const Atributes = () => {
+    const [
+      hp,
+      atk,
+      def,
+      spAtk,
+      spDef,
+      speed
+    ] = pokemonDetails?.mainContent.stats
+
+    return (
+      <div id="atributes">
+        <strong>Atributes</strong>
+        <div className="grid grid-template-columns">
+          {/* {
+            pokemonDetails?.mainContent.status.map(
+              stats => (
+                <div key={stats.stat.name}className={`stat ${stats.stat.name}`}>{stats.base_stat} HP</div>
+              )
+            )
+          } */}
+          <div className="stat hp">{hp.base_stat} HP</div>
+          <div className="stat speed">{speed.base_stat} SPEED</div>
+          <div className="stat attack">{atk.base_stat} ATK</div>
+          <div className="stat defense">{def.base_stat} DEF</div>
+          <div className="stat special-attack">{spAtk.base_stat} SP. ATK.</div>
+          <div className="stat special-defense">{spDef.base_stat} SP. DEF.</div>
+          {/* <div className="stat hp">50 HP</div>
+          <div className="stat speed">45 SPEED</div>
+          <div className="stat attack">50 ATK</div>
+          <div className="stat defense">40 DEF</div>
+          <div className="stat special-attack">SP. ATK.</div>
+          <div className="stat special-defense">SP. DEF.</div> */}
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -93,18 +165,16 @@ const Dashboard: React.FC = () => {
           <DetailsTabs>
             <DetailSection>
               <div id="artwork">
-                <img src={pokemonDetails ? pokemonDetails.mainArtWork : ''} alt=""/>
+                <img src={pokemonDetails ? pokemonDetails.mainArtWork : ''} alt={`${selectedPokemon.name}-artwork`}/>
               </div>
-              <div id="types">
-                Type
-                <div className="type grass">Grass</div>
-                <div className="type poison">Poison</div>
-              </div>
-              <div id="fisical-details">
-                <div> <strong>Height:</strong>  2'04" / 0.7 m </div>
-                <div> <strong>Weight:</strong>  15.2lbs / 06.9kg  </div>
-              </div>
-              <div id="atributes">
+              <Types />
+              <FisicalAtributes />
+
+              {/* <Atributes /> */}
+
+              <Atributes />
+
+              {/* <div id="atributes">
                 <strong>Atributes</strong>
                 <div className="grid grid-template-columns">
                   <div className="stat hp">50 HP</div>
@@ -114,7 +184,8 @@ const Dashboard: React.FC = () => {
                   <div className="stat special-attack">SP. ATK.</div>
                   <div className="stat special-defense">SP. DEF.</div>
                 </div>
-              </div>
+              </div> */}
+
             </DetailSection>
             <DetailSection style={{ paddingLeft: 0 }}>
               <div id="evolutions">
@@ -130,9 +201,7 @@ const Dashboard: React.FC = () => {
               </div>
               <div id="characteristics">
                 <span>
-                Bulbasaur is a small, quadrupedal Pokémon that has blue-green skin with darker patches. It has red eyes with white pupils, pointed, ear-like structures on top of its head, and a short, blunt snout with a wide mouth. A pair of small, pointed teeth are visible in the upper jaw when its mouth is open. Each of its thick legs ends with three sharp claws. On Bulbasaur's back is a green plant bulb, which is grown from a seed planted there at birth. The bulb provides it with energy through photosynthesis as well as from the nutrient-rich seeds contained within.
-
-                As mentioned in the anime, starter Pokémon are raised by Breeders to be distributed to new Trainers. Having been domesticated from birth, Bulbasaur is regarded as both a rare and well-behaved Pokémon. It is known to be extremely loyal, even after long-term abandonment. Bulbasaur in the anime have demonstrated a nurturing instinct towards younger, weaker Pokémon, one individual even using its vines to pick up a crying Pokémon, gently rocking it back and forth through the air while singing a "Bulba-by."
+                  {pokemonDetails?.characteristic}
                 </span>
               </div>
             </DetailSection>

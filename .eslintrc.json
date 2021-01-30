@@ -36,6 +36,7 @@
         "prettier"
     ],
     "rules": {
+      "no-await-in-loop":"off",
       "prettier/prettier": "off",
       "space-before-function-paren": "off",
       "react/prop-types": "off",
