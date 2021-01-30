@@ -58,6 +58,7 @@ const Dashboard: React.FC = () => {
     getAllPokemons(setPokemons)
     const data = await getPokemonDetail(selectedPokemon.name, selectedPokemon.id)
     setPokemonDetails(data)
+    console.log(data)
   }
 
   useEffect(() => {
@@ -100,22 +101,71 @@ const Dashboard: React.FC = () => {
   }
 
   const Atributes = () => {
-    const [hp, atk, def, spAtk, spDef, speed] = pokemonDetails?.mainContent.stats
+    const renderStatusTab = ({ base_stat, stat }) => {
+      let statusNameDisplayed = ''
+
+      switch (stat.name) {
+        case 'hp':
+          statusNameDisplayed = 'HP'
+          break
+
+        case 'speed':
+          statusNameDisplayed = 'SPEED'
+          break
+
+        case 'special-attack':
+          statusNameDisplayed = 'SP. ATK.'
+          break
+
+        case 'defense':
+          statusNameDisplayed = 'DEF'
+          break
+
+        case 'special-defense':
+          statusNameDisplayed = 'SP. DEF.'
+          break
+
+        case 'attack':
+          statusNameDisplayed = 'ATK'
+          break
+
+        default: break
+      }
+      return <div key={stat.name} className={`stat ${stat.name}`}>{base_stat} {statusNameDisplayed}</div>
+    }
 
     return (
       <div id="atributes">
         <strong>Atributes</strong>
         <div className="grid grid-template-columns">
-          <div className="stat hp">{hp.base_stat} HP</div>
-          <div className="stat speed">{speed.base_stat} SPEED</div>
-          <div className="stat attack">{atk.base_stat} ATK</div>
-          <div className="stat defense">{def.base_stat} DEF</div>
-          <div className="stat special-attack">{spAtk.base_stat} SP. ATK.</div>
-          <div className="stat special-defense">{spDef.base_stat} SP. DEF.</div>
+          {
+            pokemonDetails?.mainContent.stats.map(renderStatusTab)
+          }
+          {/* <div className="stat hp">{pokemonDetails?.mainContent.stats[0].base_stat} HP</div>
+          <div className="stat speed">{pokemonDetails?.mainContent.stats[5].base_stat} SPEED</div>
+          <div className="stat attack">{pokemonDetails?.mainContent.stats[1].base_stat} ATK</div>
+          <div className="stat defense">{pokemonDetails?.mainContent.stats[2].base_stat} DEF</div>
+          <div className="stat special-attack">{pokemonDetails?.mainContent.stats[3].base_stat} SP. ATK.</div>
+          <div className="stat special-defense">{pokemonDetails?.mainContent.stats[4].base_stat} SP. DEF.</div> */}
         </div>
       </div>
     )
   }
+  // const [hp, atk, def, spAtk, spDef, speed] = pokemonDetails?.mainContent.stats
+
+  // return (
+  //   <div id="atributes">
+  //     <strong>Atributes</strong>
+  //     <div className="grid grid-template-columns">
+  //       <div className="stat hp">{pokemonDetails?.mainContent.stats[0].base_stat} HP</div>
+  //       <div className="stat speed">{pokemonDetails?.mainContent.stats[5].base_stat} SPEED</div>
+  //       <div className="stat attack">{pokemonDetails?.mainContent.stats[1].base_stat} ATK</div>
+  //       <div className="stat defense">{pokemonDetails?.mainContent.stats[2].base_stat} DEF</div>
+  //       <div className="stat special-attack">{pokemonDetails?.mainContent.stats[3].base_stat} SP. ATK.</div>
+  //       <div className="stat special-defense">{pokemonDetails?.mainContent.stats[4].base_stat} SP. DEF.</div>
+  //     </div>
+  //   </div>
+  // )
 
   return (
     <Container>
