@@ -4,16 +4,7 @@
 import React, { useState, FormEvent } from 'react'
 import Head from 'next/head'
 
-<<<<<<< HEAD
-const SignIn: React.FC = () => (
-  <div>
-    <Head>
-      <title>Pokedex</title>
-      <link rel="shortcut icon" href="/favicon.ico" />
-    </Head>
-=======
 import { useRouter } from 'next/router'
->>>>>>> dev
 
 import { Container, HeaderTab, Form, StyledPopup } from '../styles/pages/SignIn'
 

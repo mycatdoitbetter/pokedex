@@ -61,38 +61,30 @@ const gqlQueryPokemonByName = `query pokemon($name: String!) {
   }
 }`
 
-const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => {
-    return fetch('https://pokeapi.co/api/v2/evolution-chain/1')
-    .then((response) => response.json())
-    .then(({ chain }) => {
-      var evolutionChain = [];
-      var evolutionData = chain;
-      var evolutionId = id;
+const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
+  .then((response) => response.json())
+  .then(({ chain }) => {
+    const evolutionChain = []
+    let evolutionData = chain
+    let evolutionId = id
 
-      // Algorithm to get the chain struct
-      do {
+    // Algorithm to get the chain struct
+    do {
+      const front_default = getImageArtWork(evolutionId) // Promised value
 
-        let front_default = getImageArtWork(evolutionId); // Promised value
+      evolutionId++
 
-        evolutionId++
+      evolutionChain.push({ name: evolutionData.species.name, front_default })
 
-        evolutionChain.push({ name: evolutionData.species.name, front_default })
+      evolutionData = evolutionData.evolves_to[0]
+    } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
 
-        evolutionData = evolutionData['evolves_to'][0]
+    return evolutionChain
+  })
 
-      } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
-
-      return evolutionChain
-
-    })
-
-}
-
-const getImageArtWork = async (id: number) : Promise<string> =>  {
-  return await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
   .then((res) => res.json())
-  .then(({ sprites }) => sprites.other.["official-artwork"].front_default)
-}
+  .then(({ sprites }) => sprites.other['official-artwork'].front_default)
 
 const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
   const gqlVariables = {
@@ -111,17 +103,12 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     method: 'POST'
   })
     .then((response) => response.json())
-    .then(({ data }) => ({...data.pokemon, description: "Description"}))
+    .then(({ data }) => ({ ...data.pokemon, description: 'Description' }))
 }
 
-const getDescriptionFormWiki = async (id: number)  => {
-
-  return await fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
+const getDescriptionFormWiki = async (id: number) => await fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
   .then((res) => res.json())
   .then((data) => data.descriptions[2].description)
-
-}
-
 
 export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
   const gqlVariables = {
@@ -132,7 +119,6 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
     query: gqlQueryAllPokemons,
     variables: gqlVariables
   })
-
 
   fetch('https://graphql-pokeapi.vercel.app/api/graphql', {
     credentials: 'omit',
@@ -145,11 +131,10 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
 }
 
 export const getPokemonDetail = async (name: string, id: number) : Promise<void> => {
-
   const characteristic = await getDescriptionFormWiki(id)
-  const mainContent = await getMainContentPokemon(name);
-  const mainArtWork = await getImageArtWork(id);
-  const evolutionChain = await getEvolutionChain(id);
+  const mainContent = await getMainContentPokemon(name)
+  const mainArtWork = await getImageArtWork(id)
+  const evolutionChain = await getEvolutionChain(id)
 
   // console.log("characteristic", characteristic)
   // console.log("mainContent", mainContent)
@@ -162,7 +147,4 @@ export const getPokemonDetail = async (name: string, id: number) : Promise<void>
     mainArtWork,
     evolutionChain
   }
-
-
-
 }
