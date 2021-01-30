@@ -16,13 +16,17 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/lib/apolloClient.JS"  ],
+    "**/*.tsx",
+    "./node_modules/cypress",
+    "cypress/**/*.js",
+    "./node_modules/cypress-testing-library"
+  ],
   "exclude": [
     "node_modules"
   ]
