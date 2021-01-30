@@ -140,7 +140,7 @@ export const DetailSection = styled.div`
     .rock { background-color: #b69f37;  }
     .stell { background-color: #b7b7cf;  }
     .ice { background-color: #97d7d7;  }
-    .eletric { background-color: #f7cf2f;  }
+    .electric { background-color: #f7cf2f;  }
     .dragon { background-color: #6f37f8;  }
     .ghost { background-color: #6f5697;  }
     .psychic { background-color: #f75787;  }

@@ -80,17 +80,23 @@ const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://p
   .then((res) => res.json())
   .then(({ sprites }) => sprites.other['official-artwork'].front_default)
 
-const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
+const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => {
+  const evolutionChainUrl = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
+  .then((response) => response.json())
+  .then(({ evolution_chain }) => evolution_chain.url)
+
+  return fetch(evolutionChainUrl)
   .then((response) => response.json())
   .then(async ({ chain }) => {
     let evolutionChain = []
     let evolutionData = chain
-    let evolutionId = id
 
     do {
-      const front_default = await getImageArtWork(evolutionId)
+      const specieId = await fetch(evolutionData.species.url)
+      .then((response) => response.json())
+      .then((e) => e)
 
-      evolutionId += 1
+      const front_default = await getImageArtWork(specieId.id)
 
       evolutionChain = [...evolutionChain, { name: evolutionData.species.name, front_default }]
 
@@ -99,6 +105,7 @@ const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('
 
     return evolutionChain
   })
+}
 
 const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
   const gqlVariables = {
@@ -120,7 +127,7 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     .then(({ data }) => ({ ...data.pokemon, description: 'Description' }))
 }
 
-const getDescription = async (id: number) : Promise<any> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
+const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
   .then((res) => res.json())
   .then((data) => data.flavor_text_entries[3].flavor_text)
 
@@ -145,17 +152,10 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
 }
 
 export const getPokemonDetail = async (name: string, id: number) : Promise<SetStateAction<IPokemonDetail>> => {
-  console.log(name, id)
-
   const characteristic = await getDescription(id)
   const mainContent = await getMainContentPokemon(name)
   const mainArtWork = await getImageArtWork(id)
   const evolutionChain = await getEvolutionChain(id)
-
-  // console.log("characteristic", characteristic)
-  // console.log("mainContent", mainContent)
-  // console.log("mainArtWork", mainArtWork)
-  // console.log("evolutionChain", evolutionChain)
 
   return {
     characteristic,

@@ -57,10 +57,7 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
     <ul>
       {pokemons.filter(({ name, id }) => {
         const nameDisplayed = `#${zerosPrefix(id, 3)}-${capitalizeFirstLetter(name)}`.toLowerCase()
-        if (textToSearch.length > 2) {
-          return nameDisplayed.includes(textToSearch.toLowerCase())
-        }
-        return nameDisplayed.includes('')
+        return nameDisplayed.includes(textToSearch.toLowerCase())
       }).map(renderSelectedPokemonName)}
     </ul>
   )

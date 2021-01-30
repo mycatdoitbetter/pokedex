@@ -58,7 +58,6 @@ const Dashboard: React.FC = () => {
     getAllPokemons(setPokemons)
     const data = await getPokemonDetail(selectedPokemon.name, selectedPokemon.id)
     setPokemonDetails(data)
-    console.log(data)
   }
 
   useEffect(() => {
@@ -141,31 +140,26 @@ const Dashboard: React.FC = () => {
           {
             pokemonDetails?.mainContent.stats.map(renderStatusTab)
           }
-          {/* <div className="stat hp">{pokemonDetails?.mainContent.stats[0].base_stat} HP</div>
-          <div className="stat speed">{pokemonDetails?.mainContent.stats[5].base_stat} SPEED</div>
-          <div className="stat attack">{pokemonDetails?.mainContent.stats[1].base_stat} ATK</div>
-          <div className="stat defense">{pokemonDetails?.mainContent.stats[2].base_stat} DEF</div>
-          <div className="stat special-attack">{pokemonDetails?.mainContent.stats[3].base_stat} SP. ATK.</div>
-          <div className="stat special-defense">{pokemonDetails?.mainContent.stats[4].base_stat} SP. DEF.</div> */}
         </div>
       </div>
     )
   }
-  // const [hp, atk, def, spAtk, spDef, speed] = pokemonDetails?.mainContent.stats
 
-  // return (
-  //   <div id="atributes">
-  //     <strong>Atributes</strong>
-  //     <div className="grid grid-template-columns">
-  //       <div className="stat hp">{pokemonDetails?.mainContent.stats[0].base_stat} HP</div>
-  //       <div className="stat speed">{pokemonDetails?.mainContent.stats[5].base_stat} SPEED</div>
-  //       <div className="stat attack">{pokemonDetails?.mainContent.stats[1].base_stat} ATK</div>
-  //       <div className="stat defense">{pokemonDetails?.mainContent.stats[2].base_stat} DEF</div>
-  //       <div className="stat special-attack">{pokemonDetails?.mainContent.stats[3].base_stat} SP. ATK.</div>
-  //       <div className="stat special-defense">{pokemonDetails?.mainContent.stats[4].base_stat} SP. DEF.</div>
-  //     </div>
-  //   </div>
-  // )
+  const Evolutions = () => (
+    <div id="evolutions">
+      <strong>Evolution</strong>
+      {
+        pokemonDetails?.evolutionChain.map(
+          (evolution) => (
+            <div key={evolution.name} className="evolution">
+              <img src={evolution.front_default} alt=""/>
+              <span>{evolution.name}</span>
+            </div>
+          )
+        )
+      }
+    </div>
+  )
 
   return (
     <Container>
@@ -199,20 +193,10 @@ const Dashboard: React.FC = () => {
               <Atributes />
             </DetailSection>
             <DetailSection style={{ paddingLeft: 0 }}>
-              <div id="evolutions">
-                <strong>Evolution</strong>
-                <div className="evolution">
-                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png" alt=""/>
-                  <span>Evysaur</span>
-                </div>
-                <div className="evolution">
-                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png" alt=""/>
-                  <span>Evysaur</span>
-                </div>
-              </div>
+              <Evolutions />
               <div id="characteristics">
                 <span>
-                  {pokemonDetails?.characteristic}
+                  {pokemonDetails?.characteristic.replace(/[^\w\s]/gi, '')}
                 </span>
               </div>
             </DetailSection>
