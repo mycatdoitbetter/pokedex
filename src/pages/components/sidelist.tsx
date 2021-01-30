@@ -27,8 +27,6 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
   const [selectedPokemonId, setSelectedPokemonId] = useState(1)
   const [textToSearch, setTextToSearch] = useState('')
 
-  const filterResults = () => pokemons.filter((pokemon) => pokemon.name.includes(textToSearch))
-
   const selectNewPokemon = (id: number, name: string, image: string) => {
     setSelectedPokemonId(id)
     setSelectedPokemon({ id, name, image })

@@ -1,3 +1,6 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable indent */
 /* eslint-disable no-multi-assign */
 /* eslint-disable no-unexpected-multiline */
 /* eslint-disable camelcase */
@@ -17,6 +20,7 @@ interface ITypes {
 interface IPokemon {
   id: number,
   name: string,
+  image: string,
   height: number,
   weight: number,
   types: ITypes[],
@@ -77,13 +81,25 @@ const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://p
   .then((res) => res.json())
   .then(({ sprites }) => sprites.other['official-artwork'].front_default)
 
-const getEvolutionChain = async () : Promise<IEvolutions> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
-// const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
+const getEvolutionChain = async (id: number) : Promise<any> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
   .then((response) => response.json())
-  .then(({ chain }) => ({ species: chain.species, detail: chain.evolves_to[0] }))
-  // let evolutionChain = []
-  // const evolutionData = chain
-  // let evolutionId = id
+  .then(async ({ chain }) => {
+    let evolutionChain = []
+    let evolutionData = chain
+    let evolutionId = id
+
+    do {
+      const front_default = await getImageArtWork(evolutionId)
+
+      evolutionId += 1
+
+      evolutionChain = [...evolutionChain, { name: evolutionData.species.name, front_default }]
+
+      evolutionData = evolutionData.evolves_to[0]
+    } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
+
+    return evolutionChain
+  })
 
 // Algorithm to get the chain struct
 // do {
@@ -147,7 +163,7 @@ export const getPokemonDetail = async (name: string, id: number) : Promise<IPoke
   const characteristic = await getDescription(id)
   const mainContent = await getMainContentPokemon(name)
   const mainArtWork = await getImageArtWork(id)
-  const evolutionChain = await getEvolutionChain()
+  const evolutionChain = await getEvolutionChain(id)
 
   // console.log("characteristic", characteristic)
   // console.log("mainContent", mainContent)
