@@ -1,3 +1,5 @@
+/* eslint-disable no-multi-assign */
+/* eslint-disable no-unexpected-multiline */
 /* eslint-disable camelcase */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-unmodified-loop-condition */
@@ -23,15 +25,15 @@ interface IPokemon {
 }
 
 interface IEvolutions {
-  name: string,
-  front_default: string
+  species: { evolution_details: [], evolves_to: [] },
+  detail: {name: string }
 }
 
 interface IPokemonDetail {
   characteristic: { description: string },
   mainContent: IPokemon,
   mainArtWork: string,
-  evolutionChain: IEvolutions[]
+  evolutionChain: IEvolutions
 }
 
 const gqlQueryAllPokemons = `query pokemons($limit: Int, $offset: Int) {
@@ -75,26 +77,27 @@ const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://p
   .then((res) => res.json())
   .then(({ sprites }) => sprites.other['official-artwork'].front_default)
 
-const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
+const getEvolutionChain = async () : Promise<IEvolutions> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
+// const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => fetch('https://pokeapi.co/api/v2/evolution-chain/1')
   .then((response) => response.json())
-  .then(({ chain }) => {
-    const evolutionChain = []
-    const evolutionData = chain
-    let evolutionId = id
+  .then(({ chain }) => ({ species: chain.species, detail: chain.evolves_to[0] }))
+  // let evolutionChain = []
+  // const evolutionData = chain
+  // let evolutionId = id
 
-    // Algorithm to get the chain struct
-    do {
-      const front_default = getImageArtWork(evolutionId) // Promised value
+// Algorithm to get the chain struct
+// do {
+//   const front_default = getImageArtWork(evolutionId) // Promised value
 
-      evolutionId += 1
+//   evolutionId++
 
-      evolutionChain.push({ name: evolutionData.species.name, front_default })
+//   evolutionChain = [...evolutionChain, { name: evolutionData.species.name, front_default }]
+//   // evolutionChain.push({ name: evolutionData.species.name, front_default })
 
-        [evolutionData] = evolutionData.evolves_to
-    } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
+//     [evolutionData] = evolutionData.evolves_to
+// } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
 
-    return evolutionChain
-  })
+// return evolutionChain
 
 const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
   const gqlVariables = {
@@ -144,7 +147,7 @@ export const getPokemonDetail = async (name: string, id: number) : Promise<IPoke
   const characteristic = await getDescription(id)
   const mainContent = await getMainContentPokemon(name)
   const mainArtWork = await getImageArtWork(id)
-  const evolutionChain = await getEvolutionChain(id)
+  const evolutionChain = await getEvolutionChain()
 
   // console.log("characteristic", characteristic)
   // console.log("mainContent", mainContent)

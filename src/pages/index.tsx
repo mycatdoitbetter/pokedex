@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, FormEvent } from 'react'
 import Head from 'next/head'
 
@@ -14,7 +11,7 @@ const pokeball = 'https://cdn.riderize.com/miscellaneous/pokeball.svg'
 const pikachuRunning = 'https://media.tenor.com/images/6e190eb7b580983ce09c7ccf0c91519d/tenor.gif'
 const pikachuWelcome = 'https://64.media.tumblr.com/09986226d8f379980ed638b5fd94b4cb/tumblr_msu2kr4D8J1scncwdo1_500.gif'
 
-const SignIn = () => {
+const SignIn : React.FC = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
@@ -22,7 +19,7 @@ const SignIn = () => {
   const fakeLoading = () => {
     setLoading(true)
 
-    setTimeout(() => { router.push('dashboard'); setLoading(false) }, 3000)
+    setTimeout(() => { router.push('dashboard'); setLoading(false) }, 2000)
   }
 
   const onSubmit = (e : FormEvent) => {

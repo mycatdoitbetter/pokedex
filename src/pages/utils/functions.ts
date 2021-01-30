@@ -3,6 +3,7 @@ export const capitalizeFirstLetter = (string: string) : string => string.charAt(
 
 export const zerosPrefix = (integer: number, quantityOfNumbers: number) : string => String(integer).padStart(quantityOfNumbers, '0')
 
-const string = ''
-
-export default string
+export default {
+  zerosPrefix,
+  capitalizeFirstLetter
+}

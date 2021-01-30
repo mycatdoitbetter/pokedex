@@ -56,11 +56,11 @@ const Dashboard: React.FC = () => {
             <span>{selectedPokemon.name}</span>
           </Header>
 
-          {/* <div id="switch-container">
+          <div id="switch-container">
             <DinamicSunIcon size={20}/>
             <SwitchCustom onChange={toogleTheme} checked={switcher} />
             <DinamicMoonIcon color="#fff" size={20}/>
-          </div> */}
+          </div>
 
         </DetailsContainer>
 
