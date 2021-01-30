@@ -45,14 +45,14 @@ interface IPokemonDetail {
 }
 
 const Dashboard: React.FC = () => {
+  const { toogleDarkMode, darkMode } = useContext(ThemeContext)
+
+  const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetail>()
   const [pokemons, setPokemons] = useState<IPokemon[]>([])
   const [switcher, setSwitcher] = useState(false)
   const [selectedPokemon, setSelectedPokemon] = useState({
     name: 'bulbasaur', id: 1, image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
   })
-  const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetail>()
-
-  const { toogleDarkMode, darkMode } = useContext(ThemeContext)
 
   const getData = async () => {
     getAllPokemons(setPokemons)

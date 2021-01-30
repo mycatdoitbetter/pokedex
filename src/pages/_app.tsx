@@ -15,8 +15,6 @@ export const ThemeContext = createContext<ThemeContextType>(null)
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [darkMode, toogleDarkMode] = useState(false)
 
-  // const toggleTheme = () : void => toogleDarkMode(!darkMode)
-
   return (
     <ThemeProvider theme={darkMode ? theme.colorsDark : theme.colorsLight}>
       <ThemeContext.Provider value={{ darkMode, toogleDarkMode }}>
