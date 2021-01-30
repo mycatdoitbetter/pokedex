@@ -20,7 +20,7 @@ import {
   Header,
   DetailsTabs,
   DetailSection
-} from '../styles/pages/dashboard'
+} from '../styles/pages/Dashboard'
 
 interface IStatus {
   base_stat: number,

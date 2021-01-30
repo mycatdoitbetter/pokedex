@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 import { useRouter } from 'next/router'
 
-import { Container, HeaderTab, Form, StyledPopup } from '../styles/pages/signIn'
+import { Container, HeaderTab, Form, StyledPopup } from '../styles/pages/SignIn'
 
 const pokedexLogo = 'https://cdn.riderize.com/miscellaneous/logo-pokedex.png'
 const pokedexSettings = 'https://cdn.riderize.com/miscellaneous/settings.svg'
