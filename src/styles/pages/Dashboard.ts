@@ -22,8 +22,6 @@ export const LoadPageContainer = styled.div`
 `
 
 export const Container = styled.div`
-  /* width: 100vw; */
-  /* height: 100vh; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,16 +31,6 @@ export const Container = styled.div`
     flex-direction: row;
     width: 100vw;
     height: 100vh;
-  }
-  h1 {
-    font-size: 54px;
-    color: ${(props) => props.theme.mainRed};
-    margin-top: 40px;
-  }
-  p {
-    margin-top: 24px;
-    font-size: 24px;
-    line-height: 32px;
   }
 `
 
@@ -58,11 +46,11 @@ export const SwitchCustom = styled(Switch).attrs({
 })``
 
 export const DetailsContainer = styled.div`
-display: flex;
-width: 80vw;
-margin-left: 20vw;
-background-color: ${(props) => props.theme.mainBlue};
-flex-direction: column;
+  display: flex;
+  width: 80vw;
+  margin-left: 20vw;
+  background-color: ${(props) => props.theme.mainBlue};
+  flex-direction: column;
 `
 
 export const DinamicMoonIcon = styled(HiOutlineMoon).attrs({ color: '#fff', size: 20 })`
@@ -81,7 +69,7 @@ export const Header = styled.div`
   padding: 1vh 5vw;
 
   span {
-    color: #fff;
+    color: ${(props) => props.theme.secondaryText};
     font-size: 3.3em;
     display: flex;
     align-items: center;
@@ -110,7 +98,7 @@ export const DetailSection = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background: ${(props) => props.theme.background};
     width: 100%;
     border-radius: 10px;
 
@@ -124,7 +112,7 @@ export const DetailSection = styled.div`
     box-shadow: 5px 5px 5px #0003;
     display: flex;
     align-items: center;
-    background: #fff;
+    background: ${(props) => props.theme.background};
     width: 100%;
     border-radius: 10px;
     margin-top: 20px;
@@ -179,7 +167,7 @@ export const DetailSection = styled.div`
 
     div {
       box-shadow: 5px 5px 5px #0003;
-      background: #fff;
+      background: ${(props) => props.theme.background};
       width: 48%;
       height: 100%;
       border-radius: 10px;
@@ -196,7 +184,7 @@ export const DetailSection = styled.div`
     display: flex;
     width: 100%;
     height: 150px;
-    background-color: #fff;
+    background-color: ${(props) => props.theme.background};
     justify-content: center;
     flex-direction: column;
     margin-top: 20px;
@@ -233,7 +221,7 @@ export const DetailSection = styled.div`
     display: flex;
     width: 100%;
     padding: 20px 20px;
-    background-color: #fff;
+    background-color: ${(props) => props.theme.background};
     align-items: flex-start;
     flex-direction: row;
     border-radius: 10px;
@@ -258,7 +246,7 @@ export const DetailSection = styled.div`
     box-shadow: 5px 5px 5px #0003;
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: ${(props) => props.theme.background};
     margin-top: 20px;
     border-radius: 10px;
     padding-left: 20px;

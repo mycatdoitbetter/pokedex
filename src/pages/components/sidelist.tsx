@@ -26,6 +26,7 @@ const pokemonLogo = 'https://cdn.riderize.com/miscellaneous/logo-pokedex.png'
 const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : ManagePokemons) => {
   const [selectedPokemonId, setSelectedPokemonId] = useState(1)
   const [textToSearch, setTextToSearch] = useState('')
+  const [easterEgg, setEasterEgg] = useState(false)
 
   const selectNewPokemon = (id: number, name: string, image: string) => {
     setSelectedPokemonId(id)
@@ -52,6 +53,20 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
       <img src="https://i.pinimg.com/originals/0f/58/60/0f5860ab2d063aaa92d55a994d9b47e4.gif" width={100} alt="mew-is-loading"/>
     </div>
   )
+
+  const EasterEgg = () => (
+    <div>
+      <img src="https://i.imgur.com/4wGvsX7.gif" width={140} alt="mew-is-loading"/>
+    </div>
+  )
+
+  const showEasterEgg = () => {
+    if (textToSearch.toLowerCase() === 'missingno' || textToSearch.toLowerCase() === '#152') {
+      return true
+    }
+
+    return false
+  }
 
   const PokemonsList = () => (
     <ul>
@@ -82,8 +97,11 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
 
       <ListContainer>
         {
+          showEasterEgg() && <EasterEgg />
+        }
+        {
           pokemons
-            ? <PokemonsList />
+            ? !showEasterEgg() && <PokemonsList />
             : <MewIsLoading />
         }
       </ListContainer>
