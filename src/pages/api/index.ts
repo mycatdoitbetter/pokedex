@@ -24,7 +24,7 @@ interface IPokemon {
   image: string,
   weight: number,
   types: ITypes[],
-  status: IStatus[]
+  stats: IStatus[]
   description: string
 }
 
