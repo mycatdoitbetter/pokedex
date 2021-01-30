@@ -8,10 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.7",
+    "cookie-parser": "^1.4.5",
+    "graphql": "^15.5.0",
+    "js-cookie": "^2.2.1",
     "next": "10.0.5",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "styled-components": "^5.2.1"
+    "react-icons": "^4.1.0",
+    "react-switch": "^6.0.0",
+    "reactjs-popup": "^2.0.4",
+    "styled-components": "^5.2.1",
+    "swr": "^0.4.1"
   },
   "devDependencies": {
     "@types/node": "^14.6.0",
