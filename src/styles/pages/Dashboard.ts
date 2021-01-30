@@ -6,6 +6,21 @@ import Switch from 'react-switch'
 import { FiSun } from 'react-icons/fi'
 import { HiOutlineMoon } from 'react-icons/hi'
 
+export const LoadPageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+
+  justify-content: center;
+  align-items: center;
+
+  img {
+    height: 10em;
+  }
+
+`
+
 export const Container = styled.div`
   /* width: 100vw; */
   /* height: 100vh; */

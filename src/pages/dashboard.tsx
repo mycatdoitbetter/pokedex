@@ -10,7 +10,7 @@ import SideList, { capitalizeFirstLetter, zerosPrefix } from './components/sidel
 
 import { ThemeContext } from './_app'
 
-import { Container, SwitchCustom, DetailsContainer, DinamicMoonIcon, DinamicSunIcon, Header, DetailsTabs, DetailSection } from '../styles/pages/Dashboard'
+import { LoadPageContainer, Container, SwitchCustom, DetailsContainer, DinamicMoonIcon, DinamicSunIcon, Header, DetailsTabs, DetailSection } from '../styles/pages/Dashboard'
 
 interface IStatus {
   base_stat: number,
@@ -161,6 +161,18 @@ const Dashboard: React.FC = () => {
     </div>
   )
 
+  const MewIsLoading = () => (
+    <LoadPageContainer id="loading-page-container">
+      <img src="https://i.pinimg.com/originals/0f/58/60/0f5860ab2d063aaa92d55a994d9b47e4.gif" alt="mew-is-loading"/>
+    </LoadPageContainer>
+  )
+
+  if (!pokemonDetails) {
+    return (
+      <MewIsLoading />
+    )
+  }
+
   return (
     <Container>
       <Head>
@@ -170,7 +182,6 @@ const Dashboard: React.FC = () => {
       <main>
         <SideList setSelectedPokemon={setSelectedPokemon} pokemons={pokemons} />
         <DetailsContainer>
-
           <Header>
             <span>
               {`#${zerosPrefix(selectedPokemon.id, 3)} - ${capitalizeFirstLetter(selectedPokemon.name)}`}
@@ -182,7 +193,6 @@ const Dashboard: React.FC = () => {
               <DinamicMoonIcon />
             </div>
           </Header>
-
           <DetailsTabs>
             <DetailSection>
               <div id="artwork">
@@ -201,20 +211,7 @@ const Dashboard: React.FC = () => {
               </div>
             </DetailSection>
           </DetailsTabs>
-
         </DetailsContainer>
-
-        {/* <h1>Dashboard!</h1> */}
-        {/* <button type="button" onClick={() => console.log((pokemons[0]))}> */}
-        {/* <button type="button" onClick={() => console.log(pokemons)}>
-        Fetch ALL
-        </button>
-        <button type="button" onClick={() => getPokemonDetail('bulbasaur', 1)}>
-        Fetch one
-      </button> */}
-        {/* <button type="button" onClick={() => getPokemonDetail(1, 'bulbasaur')}> */}
-        {/* Fetch detail */}
-        {/* </button> */}
       </main>
     </Container>
   )
