@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable indent */
@@ -6,7 +7,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-unmodified-loop-condition */
-import { Dispatch } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 interface IStatus {
   base_stat: number,
@@ -20,8 +21,9 @@ interface ITypes {
 interface IPokemon {
   id: number,
   name: string,
-  image: string,
+  url: string,
   height: number,
+  image: string,
   weight: number,
   types: ITypes[],
   status: IStatus[]
@@ -34,7 +36,7 @@ interface IEvolutions {
 }
 
 interface IPokemonDetail {
-  characteristic: { description: string },
+  characteristic: string,
   mainContent: IPokemon,
   mainArtWork: string,
   evolutionChain: IEvolutions
@@ -135,7 +137,7 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     .then(({ data }) => ({ ...data.pokemon, description: 'Description' }))
 }
 
-const getDescription = async (id: number) : Promise<{description: string}> => fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
+const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/characteristic/${id}/`)
   .then((res) => res.json())
   .then((data) => data.descriptions[2].description)
 
@@ -159,7 +161,7 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
     .then(({ data }) => setPokemons(data.pokemons.results))
 }
 
-export const getPokemonDetail = async (name: string, id: number) : Promise<IPokemonDetail> => {
+export const getPokemonDetail = async (name: string, id: number) : Promise<SetStateAction<IPokemonDetail>> => {
   const characteristic = await getDescription(id)
   const mainContent = await getMainContentPokemon(name)
   const mainArtWork = await getImageArtWork(id)

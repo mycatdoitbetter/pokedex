@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useContext } from 'react'
 import Head from 'next/head'
@@ -56,7 +57,6 @@ const Dashboard: React.FC = () => {
     getAllPokemons(setPokemons)
     const data = await getPokemonDetail(selectedPokemon.name, selectedPokemon.id)
     setPokemonDetails(data)
-    console.log(pokemonDetails)
   }
 
   useEffect(() => {
