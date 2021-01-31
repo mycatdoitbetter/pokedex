@@ -16,9 +16,10 @@ const SignIn : React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
 
+  // Fake load to simulate a login and show the
+  // Pikachu loader
   const fakeLoading = () => {
     setLoading(true)
-
     setTimeout(() => { router.push('dashboard'); setLoading(false) }, 2000)
   }
 
@@ -36,12 +37,14 @@ const SignIn : React.FC = () => {
       <main>
         <HeaderTab>
           <img src={pokedexLogo} alt="logo-pokedex"/>
-
-          <StyledPopup on="hover" trigger={<img id="settings-gear" src={pokedexSettings} alt="settings-gear"/>} position="bottom right" arrow={false}>
+          <StyledPopup
+            on="hover"
+            trigger={<img id="settings-gear" src={pokedexSettings} alt="settings-gear"/>}
+            position="bottom right"
+            arrow={false}>
             <img src={pikachuWelcome} alt="pikachu-welcome" width={42} />
             <span>Hello! Welcome to Pokedex!</span>
           </StyledPopup>
-
         </HeaderTab>
         <img src={pokeball} alt="pokeball"/>
         <Form action="submit" onSubmit={onSubmit}>
@@ -69,8 +72,3 @@ const SignIn : React.FC = () => {
 }
 
 export default SignIn
-
-//  {/* <h1>Hello My Friends New!!</h1> */}
-//     {/* <Link href="/dashboard">
-//       <a>Go to dash</a>
-//     </Link> */}

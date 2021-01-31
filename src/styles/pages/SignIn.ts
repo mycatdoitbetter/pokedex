@@ -51,8 +51,6 @@ export const HeaderTab = styled.div`
     :hover {
       animation: ${rotate} 3s linear infinite;
     }
-
-
   }
 `
 export const Form = styled.form`
@@ -89,13 +87,9 @@ export const Form = styled.form`
       opacity: 0.8;
       cursor: pointer
     }
-
     font-size: 14px;
     font-weight: 700;
     color: ${(props) => props.theme.secondaryText};
-
-
-
 
   }
 

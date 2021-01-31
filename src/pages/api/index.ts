@@ -1,10 +1,7 @@
-/* eslint-disable max-len */
 /* eslint-disable prefer-destructuring */
-/* eslint-disable indent */
-/* eslint-disable no-multi-assign */
-/* eslint-disable no-unexpected-multiline */
 /* eslint-disable camelcase */
 /* eslint-disable no-prototype-builtins */
+
 import { Dispatch, SetStateAction } from 'react'
 
 interface IStatus {
@@ -39,6 +36,7 @@ interface IPokemonDetail {
   evolutionChain: IEvolutions[]
 }
 
+// GraphQL Queries
 const gqlQueryAllPokemons = `query pokemons($limit: Int, $offset: Int) {
   pokemons(limit: $limit, offset: $offset) {
     count
@@ -54,7 +52,6 @@ const gqlQueryAllPokemons = `query pokemons($limit: Int, $offset: Int) {
     }
   }
 }`
-
 const gqlQueryPokemonByName = `query pokemon($name: String!) {
   pokemon(name: $name) {
     id
@@ -76,37 +73,42 @@ const gqlQueryPokemonByName = `query pokemon($name: String!) {
   }
 }`
 
+// Get the main image by the pokemon ID
 const getImageArtWork = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
   .then((res) => res.json())
   .then(({ sprites }) => sprites.other['official-artwork'].front_default)
 
+// Get the evolution chain by the pokemon ID
 const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => {
   const evolutionChainUrl = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
-  .then((response) => response.json())
-  .then(({ evolution_chain }) => evolution_chain.url)
+    .then((response) => response.json())
+    .then(({ evolution_chain }) => evolution_chain.url)
 
   return fetch(evolutionChainUrl)
-  .then((response) => response.json())
-  .then(async ({ chain }) => {
-    let evolutionChain = []
-    let evolutionData = chain
+    .then((response) => response.json())
+    .then(async ({ chain }) => {
+      let evolutionChain = []
+      let evolutionData = chain
 
-    do {
-      const specieId = await fetch(evolutionData.species.url)
-      .then((response) => response.json())
-      .then((e) => e)
+      // The chain data struct requires this algorithm to restruct
+      // to the best format for display and work on front
+      do {
+        const specieId = await fetch(evolutionData.species.url)
+          .then((response) => response.json())
+          .then((e) => e)
 
-      const front_default = await getImageArtWork(specieId.id)
+        const front_default = await getImageArtWork(specieId.id)
 
-      evolutionChain = [...evolutionChain, { name: evolutionData.species.name, front_default }]
+        evolutionChain = [...evolutionChain, { name: evolutionData.species.name, front_default }]
 
-      evolutionData = evolutionData.evolves_to[0]
-    } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
+        evolutionData = evolutionData.evolves_to[0]
+      } while (!!evolutionData && evolutionData.hasOwnProperty('evolves_to'))
 
-    return evolutionChain
-  })
+      return evolutionChain
+    })
 }
 
+// Get the main content of the pokemon by his name (GraphQL Query)
 const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
   const gqlVariables = {
     name
@@ -127,13 +129,15 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     .then(({ data }) => ({ ...data.pokemon, description: 'Description' }))
 }
 
+// Get one of the description flavor's on the pokeapi
 const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
   .then((res) => res.json())
   .then((data) => data.flavor_text_entries[5].flavor_text)
 
+// Get all pokemons (The quantity is managed by the GraphQL query) of the first generation
 export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
   const gqlVariables = {
-    limit: 151,
+    limit: 151, // First generation of pokemons
     offset: 0
   }
   const body = JSON.stringify({
@@ -151,7 +155,9 @@ export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
     .then(({ data }) => setPokemons(data.pokemons.results))
 }
 
-export const getPokemonDetail = async (name: string, id: number) : Promise<SetStateAction<IPokemonDetail>> => {
+// Export the result for the dashboard
+export const getPokemonDetail = async (name: string, id: number)
+: Promise<SetStateAction<IPokemonDetail>> => {
   const characteristic = await getDescription(id)
   const mainContent = await getMainContentPokemon(name)
   const mainArtWork = await getImageArtWork(id)

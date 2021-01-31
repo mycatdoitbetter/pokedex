@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useContext } from 'react'
 import Head from 'next/head'
@@ -91,6 +90,7 @@ const Dashboard: React.FC = () => {
   )
 
   const FisicalAtributes = () => {
+    // Convert the data of the fisical atributes
     const heightInMeters = pokemonDetails?.mainContent.height / 10
 
     const heightToInch = heightInMeters * 39.37
@@ -103,8 +103,12 @@ const Dashboard: React.FC = () => {
 
     return (
       <div id="fisical-details">
-        <div> <strong>Height:</strong>{feet}'{zerosPrefix(leftover, 2)}" / {heightInMeters} m</div>
-        <div> <strong>Weight:</strong>{weightInLbs.toString().substring(0, 4)}lbs. / {weightInKg}kg</div>
+        <div>
+          <strong>Height:</strong>{feet}'{zerosPrefix(leftover, 2)}" / {heightInMeters} m
+        </div>
+        <div>
+          <strong>Weight:</strong>{weightInLbs.toString().substring(0, 4)}lbs. / {weightInKg}kg
+        </div>
       </div>
     )
   }
@@ -113,6 +117,8 @@ const Dashboard: React.FC = () => {
     const renderStatusTab = ({ base_stat, stat }) => {
       let statusNameDisplayed = ''
 
+      // The stats on api have a diferent name as the displayed
+      // and Vercel (Builder) dont does not allow unstructuring of array
       switch (stat.name) {
         case 'hp':
           statusNameDisplayed = 'HP'
@@ -195,7 +201,7 @@ const Dashboard: React.FC = () => {
           <Header>
             <span>
               {`#${zerosPrefix(selectedPokemon.id, 3)} - ${capitalizeFirstLetter(selectedPokemon.name)}`}
-              <img src={selectedPokemon.image} alt=""/>
+              <img src={selectedPokemon.image} alt={`${selectedPokemon.name}-sprite`}/>
             </span>
             <div id="switch-container">
               <DinamicSunIcon />

@@ -134,6 +134,9 @@ export const DetailSection = styled.div`
       font-weight: normal;
       text-transform: uppercase
     }
+
+    // All the reference type colors
+    // of pokemons
     .grass { background-color: #54b947; }
     .poison { background-color: #9f3fa0; }
     .grass { background-color: #77c74e;  }
@@ -207,6 +210,7 @@ export const DetailSection = styled.div`
       border-radius: 10px;
       }
 
+    // All reference status colors
     .hp { background-color: #ff5959 }
     .speed { background-color: #ff76a1 }
     .attack { background-color: #ff9a57 }

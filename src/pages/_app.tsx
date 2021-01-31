@@ -18,7 +18,6 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={darkMode ? theme.colorsDark : theme.colorsLight}>
       <ThemeContext.Provider value={{ darkMode, toogleDarkMode }}>
-        {/* <ThemeProvider theme={darkMode ? theme.colorsDark : theme.colors}> */}
         <Component {...pageProps} />
         <GlobalStyle />
       </ThemeContext.Provider>
