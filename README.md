@@ -51,3 +51,6 @@ You can init this application to! clone the projetct and you can start by:
 cd pokedex
 yarn dev
 ```
+
+
+Also, try to find the #152 Pokémon. ;)
