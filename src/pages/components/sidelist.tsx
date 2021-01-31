@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 
 import { Container, InputSearchContainer, ListContainer, MagnifyIcon } from '../../styles/components/sidelist'
 
@@ -26,7 +26,6 @@ const pokemonLogo = 'https://cdn.riderize.com/miscellaneous/logo-pokedex.png'
 const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : ManagePokemons) => {
   const [selectedPokemonId, setSelectedPokemonId] = useState(1)
   const [textToSearch, setTextToSearch] = useState('')
-  const [easterEgg, setEasterEgg] = useState(false)
 
   const selectNewPokemon = (id: number, name: string, image: string) => {
     setSelectedPokemonId(id)
@@ -83,7 +82,7 @@ const Dashboard: React.FC<ManagePokemons> = ({ setSelectedPokemon, pokemons } : 
         <img src={pokemonLogo} />
         <span>Everything you wanted know about your favorite pocket monsters!</span>
 
-        <InputSearchContainer >
+        <InputSearchContainer>
           <input
             type="text"
             onChange={({ target }) => setTextToSearch(target.value)}

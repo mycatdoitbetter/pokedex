@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import Switch from 'react-switch'
 
+import Popup from 'reactjs-popup'
+
 import { FiSun } from 'react-icons/fi'
 import { HiOutlineMoon } from 'react-icons/hi'
 
@@ -53,11 +55,11 @@ export const DetailsContainer = styled.div`
   flex-direction: column;
 `
 
-export const DinamicMoonIcon = styled(HiOutlineMoon).attrs({ color: '#fff', size: 20 })`
+export const DynamicMoonIcon = styled(HiOutlineMoon).attrs({ color: '#fff', size: 20 })`
   margin-left: 10px;
 `
 
-export const DinamicSunIcon = styled(FiSun).attrs({ color: '#fff', size: 20 })`
+export const DynamicSunIcon = styled(FiSun).attrs({ color: '#fff', size: 20 })`
  margin-right: 10px;
 `
 
@@ -100,6 +102,7 @@ export const DetailSection = styled.div`
     justify-content: center;
     background: ${(props) => props.theme.background};
     width: 100%;
+    /* width: 100%; */
     border-radius: 10px;
 
 
@@ -138,13 +141,12 @@ export const DetailSection = styled.div`
     // All the reference type colors
     // of pokemons
     .grass { background-color: #54b947; }
-    .poison { background-color: #9f3fa0; }
-    .grass { background-color: #77c74e;  }
+    .poison { background-color: #9f3fa0; };
     .water { background-color: #a8a777;  }
     .fire { background-color: #ef7e2e;  }
     .ground { background-color: #dfbf68;  }
     .rock { background-color: #b69f37;  }
-    .stell { background-color: #b7b7cf;  }
+    .steel { background-color: #b7b7cf;  }
     .ice { background-color: #97d7d7;  }
     .electric { background-color: #f7cf2f;  }
     .dragon { background-color: #6f37f8;  }
@@ -159,7 +161,7 @@ export const DetailSection = styled.div`
 
   }
 
-  #fisical-details {
+  #physical-details {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -182,7 +184,7 @@ export const DetailSection = styled.div`
 
   }
 
-  #atributes {
+  #attributes {
     box-shadow: 5px 5px 5px #0003;
     display: flex;
     width: 100%;
@@ -201,8 +203,8 @@ export const DetailSection = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      background: tomato;
+      color: ${({ theme }) => theme.secondaryText};
+      font-weight: 500;
       text-align: center;
       font-size: 0.95em;
       height: 30px;
@@ -211,12 +213,12 @@ export const DetailSection = styled.div`
       }
 
     // All reference status colors
-    .hp { background-color: #ff5959 }
-    .speed { background-color: #ff76a1 }
-    .attack { background-color: #ff9a57 }
-    .defense { background-color: #ffca00 }
-    .special-attack { background-color: #006fea }
-    .special-defense { background-color: #4bc853 }
+    .hp { background-color: ${({ theme }) => theme.hp}; }
+    .speed { background-color: ${({ theme }) => theme.speed} }
+    .attack { background-color: ${({ theme }) => theme.attack} }
+    .defense { background-color: ${({ theme }) => theme.defense} }
+    .special-attack { background-color: ${({ theme }) => theme.specialAttack} }
+    .special-defense { background-color: ${({ theme }) => theme.specialDefense} }
 
   }
 
@@ -225,7 +227,7 @@ export const DetailSection = styled.div`
     display: flex;
     width: 100%;
     padding: 20px 20px;
-    background-color: ${(props) => props.theme.background};
+    background-color: ${({ theme }) => theme.background};
     align-items: flex-start;
     flex-direction: row;
     border-radius: 10px;
@@ -263,4 +265,26 @@ export const DetailSection = styled.div`
 
   }
 
+`
+export const StyledPopup = styled(Popup)`
+  &-overlay {
+    background-color: red
+  }
+  &-content {
+    /* width: 350px; */
+    background-color: ${(props) => props.theme.background};
+    padding: 20px;
+    box-shadow: 5px 5px 5px #9999;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      color: #000;
+      /* padding: 10px 10px; */
+      /* width: 280px; */
+    }
+
+  }
 `

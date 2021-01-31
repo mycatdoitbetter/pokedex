@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable camelcase */
 import React, { useState, useEffect, useContext } from 'react'
 import Head from 'next/head'
 
@@ -14,8 +12,8 @@ import {
   Container,
   SwitchCustom,
   DetailsContainer,
-  DinamicMoonIcon,
-  DinamicSunIcon,
+  DynamicMoonIcon,
+  DynamicSunIcon,
   Header,
   DetailsTabs,
   DetailSection
@@ -54,32 +52,28 @@ interface IPokemonDetail {
 }
 
 const Dashboard: React.FC = () => {
-  const { toogleDarkMode, darkMode } = useContext(ThemeContext)
-
+  const { toggleDarkMode, darkMode } = useContext(ThemeContext)
   const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetail>()
   const [pokemons, setPokemons] = useState<IPokemon[]>([])
   const [switcher, setSwitcher] = useState(false)
-  const [isFetching, setIsFetching] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState({
     name: 'bulbasaur', id: 1, image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
   })
-
-  
 
   const getData = async () => {
     getAllPokemons(setPokemons)
     const data = await getPokemonDetail(selectedPokemon.name, selectedPokemon.id)
     setPokemonDetails(data)
   }
-  
+
   useEffect(() => {
-    // setTimeout(() => setIsFetching(true), 500)
     getData()
+
     // setIsFetching(false)
   }, [selectedPokemon])
 
-  const toogleTheme = () => {
-    toogleDarkMode(!darkMode)
+  const toggleTheme = () => {
+    toggleDarkMode(!darkMode)
     setSwitcher(!switcher)
   }
 
@@ -94,8 +88,8 @@ const Dashboard: React.FC = () => {
     </div>
   )
 
-  const FisicalAtributes = () => {
-    // Convert the data of the fisical atributes
+  const PhysicalAttributes = () => {
+    // Convert the data of the physical attributes
     const heightInMeters = pokemonDetails?.mainContent.height / 10
 
     const heightToInch = heightInMeters * 39.37
@@ -107,9 +101,9 @@ const Dashboard: React.FC = () => {
     const weightInKg = pokemonDetails?.mainContent.weight / 10
 
     return (
-      <div id="fisical-details">
+      <div id="physical-details">
         <div>
-          <strong>Height:</strong>{feet}'{zerosPrefix(leftover, 2)}" / {heightInMeters} m
+          <strong>Height:</strong>{feet}'{zerosPrefix(leftover, 2)}" / {heightInMeters.toFixed(1)} m
         </div>
         <div>
           <strong>Weight:</strong>{weightInLbs.toString().substring(0, 4)}lbs. / {weightInKg}kg
@@ -117,14 +111,14 @@ const Dashboard: React.FC = () => {
       </div>
     )
   }
-  console.log(pokemonDetails?.characteristic.normalize())
+  // console.log(pokemonDetails?.characteristic.normalize())
 
-  const Atributes = () => {
+  const Attributes = () => {
     const renderStatusTab = ({ base_stat, stat }) => {
       let statusNameDisplayed = ''
 
-      // The stats on api have a diferent name as the displayed
-      // and Vercel (Builder) dont does not allow unstructuring of array
+      // The stats on api have a different name as the displayed
+      // and Vercel (Builder) don't does not allow disruption of array
       switch (stat.name) {
         case 'hp':
           statusNameDisplayed = 'HP'
@@ -156,8 +150,8 @@ const Dashboard: React.FC = () => {
     }
 
     return (
-      <div id="atributes">
-        <strong>Atributes</strong>
+      <div id="attributes">
+        <strong>Attributes</strong>
         <div className="grid grid-template-columns">
           {
             pokemonDetails?.mainContent.stats.map(renderStatusTab)
@@ -189,7 +183,7 @@ const Dashboard: React.FC = () => {
     </LoadPageContainer>
   )
 
-  if (!pokemonDetails || isFetching) {
+  if (!pokemonDetails) {
     return (
       <MewIsLoading />
     )
@@ -210,9 +204,9 @@ const Dashboard: React.FC = () => {
               <img src={selectedPokemon.image} alt={`${selectedPokemon.name}-sprite`}/>
             </span>
             <div id="switch-container">
-              <DinamicSunIcon />
-              <SwitchCustom onChange={toogleTheme} checked={switcher} />
-              <DinamicMoonIcon />
+              <DynamicSunIcon />
+              <SwitchCustom onChange={toggleTheme} checked={switcher} />
+              <DynamicMoonIcon />
             </div>
           </Header>
           <DetailsTabs>
@@ -221,15 +215,14 @@ const Dashboard: React.FC = () => {
                 <img src={pokemonDetails ? pokemonDetails.mainArtWork : ''} alt={`${selectedPokemon.name}-artwork`}/>
               </div>
               <Types />
-              <FisicalAtributes />
-              <Atributes />
+              <PhysicalAttributes />
+              <Attributes />
             </DetailSection>
             <DetailSection style={{ paddingLeft: 0 }}>
               <Evolutions />
               <div id="characteristics">
                 <span>
                   {pokemonDetails?.characteristic}
-                  {/* {pokemonDetails?.characteristic.replace(/[^a-zA-Z0-9 ]/g, '\n ')} */}
                 </span>
               </div>
             </DetailSection>

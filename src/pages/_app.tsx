@@ -7,17 +7,17 @@ import theme from '../styles/theme'
 
 export type ThemeContextType = {
   darkMode: boolean;
-  toogleDarkMode: Dispatch<SetStateAction<boolean>>;
+  toggleDarkMode: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ThemeContext = createContext<ThemeContextType>(null)
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const [darkMode, toogleDarkMode] = useState(false)
+  const [darkMode, toggleDarkMode] = useState(false)
 
   return (
     <ThemeProvider theme={darkMode ? theme.colorsDark : theme.colorsLight}>
-      <ThemeContext.Provider value={{ darkMode, toogleDarkMode }}>
+      <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
         <Component {...pageProps} />
         <GlobalStyle />
       </ThemeContext.Provider>

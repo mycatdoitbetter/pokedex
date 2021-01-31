@@ -38,7 +38,11 @@
     ],
     "rules": {
       "no-await-in-loop":"off",
+      "react/no-unescaped-entities": "off",
+      "prefer-destructuring": "off",
       "prettier/prettier": "off",
+      "camelcase": "off",
+      "no-prototype-builtins": "off",
       "space-before-function-paren": "off",
       "react/prop-types": "off",
       "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],

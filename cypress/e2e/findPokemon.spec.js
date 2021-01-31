@@ -15,7 +15,7 @@ describe('Search a Pokemon', () => {
     cy.wait(500).findAllByAltText('evolutions-artwork')
     cy.findByAltText('gyarados-artwork')
 
-    // Find fisical atributes
+    // Find physical attributes
     cy.findByText('21\'04" / 6.5 m') // Height result
     cy.findByText('518.lbs. / 235kg') // Weight result
 
@@ -26,7 +26,7 @@ describe('Search a Pokemon', () => {
     // Find characteristics
     cy.findByText('It appears when ever there is world conflict burning down any place it travels through')
 
-    // Find atributes
+    // Find attributes
     cy.findByText('95 HP')
     cy.findByText('125 ATK')
     cy.findByText('79 DEF')

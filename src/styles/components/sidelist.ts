@@ -46,8 +46,8 @@ export const Container = styled.div`
 `
 
 export const InputSearchContainer = styled.div`
-    color: ${(props) => props.theme.mainBlue};
-    background-color: ${(props) => props.theme.background};
+    color: ${({ theme }) => theme.mainBlue};
+    background-color: #fff;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -57,12 +57,12 @@ export const InputSearchContainer = styled.div`
     width: 100%;
 
     input {
+      background-color: #fff;
       width: 100%;
       padding: 10px 10px;
       border: none;
       outline: none;
       font-size: 13px;
-      color: gray;
       outline: 0;
       border-radius: 20px;
     }
@@ -91,6 +91,7 @@ export const ListContainer = styled.nav`
     padding-left: 5px;
 
     :hover {
+      cursor: pointer;
       transition: all .2s ease-in-out;
       transform: scale(1.02);
     }
@@ -101,6 +102,8 @@ export const ListContainer = styled.nav`
     padding: 10px 0;
     color: ${(props) => props.theme.secondaryText};
     font-size: 16px;
+
+
   }
 
   li.selected {

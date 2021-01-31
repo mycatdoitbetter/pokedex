@@ -1,7 +1,3 @@
-/* eslint-disable prefer-destructuring */
-/* eslint-disable camelcase */
-/* eslint-disable no-prototype-builtins */
-
 import { Dispatch, SetStateAction } from 'react'
 
 interface IStatus {
@@ -90,8 +86,9 @@ const getEvolutionChain = async (id: number) : Promise<IEvolutions[]> => {
       let evolutionChain = []
       let evolutionData = chain
 
-      // The chain data struct requires this algorithm to restruct
+      // The chain data structure requires this algorithm to restructure
       // to the best format for display and work on front
+
       do {
         const specieId = await fetch(evolutionData.species.url)
           .then((response) => response.json())
@@ -130,11 +127,16 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
 }
 
 // Get one of the description flavor's on the pokeapi
+
+/**
+ * The description of the
+ *
+ */
 const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
   .then((res) => res.json())
-  .then((data) => data.flavor_text_entries[52].flavor_text)
+  .then((data) => data.flavor_text_entries[20].flavor_text)
 
-// Get all pokemons (The quantity is managed by the GraphQL query) of the first generation
+// Get all pokémon's (The quantity is managed by the GraphQL query) of the first generation
 export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {
   const gqlVariables = {
     limit: 151, // First generation of pokemons
