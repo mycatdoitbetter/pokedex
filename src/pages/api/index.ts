@@ -132,7 +132,7 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
 // Get one of the description flavor's on the pokeapi
 const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
   .then((res) => res.json())
-  .then((data) => data.flavor_text_entries[5].flavor_text)
+  .then((data) => data.flavor_text_entries[52].flavor_text)
 
 // Get all pokemons (The quantity is managed by the GraphQL query) of the first generation
 export const getAllPokemons = (setPokemons: Dispatch<[]>) : void => {

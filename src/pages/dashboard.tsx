@@ -59,18 +59,23 @@ const Dashboard: React.FC = () => {
   const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetail>()
   const [pokemons, setPokemons] = useState<IPokemon[]>([])
   const [switcher, setSwitcher] = useState(false)
+  const [isFetching, setIsFetching] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState({
     name: 'bulbasaur', id: 1, image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
   })
+
+  
 
   const getData = async () => {
     getAllPokemons(setPokemons)
     const data = await getPokemonDetail(selectedPokemon.name, selectedPokemon.id)
     setPokemonDetails(data)
   }
-
+  
   useEffect(() => {
+    // setTimeout(() => setIsFetching(true), 500)
     getData()
+    // setIsFetching(false)
   }, [selectedPokemon])
 
   const toogleTheme = () => {
@@ -112,6 +117,7 @@ const Dashboard: React.FC = () => {
       </div>
     )
   }
+  console.log(pokemonDetails?.characteristic.normalize())
 
   const Atributes = () => {
     const renderStatusTab = ({ base_stat, stat }) => {
@@ -183,7 +189,7 @@ const Dashboard: React.FC = () => {
     </LoadPageContainer>
   )
 
-  if (!pokemonDetails) {
+  if (!pokemonDetails || isFetching) {
     return (
       <MewIsLoading />
     )
@@ -222,7 +228,8 @@ const Dashboard: React.FC = () => {
               <Evolutions />
               <div id="characteristics">
                 <span>
-                  {pokemonDetails?.characteristic.replace(/[^a-zA-Z0-9 ]/g, '\n ')}
+                  {pokemonDetails?.characteristic}
+                  {/* {pokemonDetails?.characteristic.replace(/[^a-zA-Z0-9 ]/g, '\n ')} */}
                 </span>
               </div>
             </DetailSection>
