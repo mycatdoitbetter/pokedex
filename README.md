@@ -12,7 +12,7 @@
 </div>
 
 <br />
-  <a href="https://github.com/mycatdoitbetter/hermes-backend">
+  <a href="https://pokedex.mycatdoitbetter.vercel.app/">
   <strong>
   <p align="center" style="text-align: center;">
   Access the Pokedex hosted in Vercel here! 🎉
