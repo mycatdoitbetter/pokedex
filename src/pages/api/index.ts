@@ -126,12 +126,9 @@ const getMainContentPokemon = async (name: string) : Promise<IPokemon> => {
     .then(({ data }) => ({ ...data.pokemon, description: 'Description' }))
 }
 
-// Get one of the description flavor's on the pokeapi
+// Get one of the description flavor's on the pokeapi.
+// Get the text from the 21th position, arbitrarily, just to get the better format
 
-/**
- * The description of the
- *
- */
 const getDescription = async (id: number) : Promise<string> => fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
   .then((res) => res.json())
   .then((data) => data.flavor_text_entries[20].flavor_text)
